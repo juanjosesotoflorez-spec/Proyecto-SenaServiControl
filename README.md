@@ -1,126 +1,252 @@
-🚗 SenaServiControl - Sistema de Gestión para Serviteca y Taller Automotriz
+ 
+<!-- BANNER PRINCIPAL -->
+<div align="center">
 
-SenaServiControl es un sistema web de grado empresarial diseñado para la gestión, control, auditoría y seguimiento integral de operaciones en servitecas y talleres automotrices. La plataforma optimiza los flujos de trabajo administrativos y técnicos, permitiendo gestionar clientes, vehículos, órdenes de servicio, mantenimientos, reparaciones e inventario de repuestos en tiempo real bajo una arquitectura robusta y escalable.
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:006B35,50:00AF50,100:003D24&height=220&section=header&text=SenaServiControl&fontSize=48&fontColor=FFFFFF&fontAlignY=38&desc=Sistema%20Web%20de%20Gesti%C3%B3n%20Automotriz&descAlignY=60&descSize=18&animation=fadeIn" />
 
-👥 Roles del Sistema y Control de Acceso (RBAC)
+<h3>🚗 Gestión inteligente para servitecas y talleres automotrices</h3>
 
-El sistema implementa un control estricto de acceso basado en roles (RBAC):
+<p>
+  Sistema web orientado a optimizar los procesos administrativos y operativos de una serviteca automotriz, facilitando el registro, control y seguimiento de clientes, vehículos y servicios.
+</p>
 
-🛡️ Administrador: Supervisión global del taller, gestión de usuarios, asignación y balanceo de carga técnica, auditoría de actividades (historial_actividad_usuario), gestión de incidencias, evaluación de tendencias y generación de reportes estadísticos por períodos.
+<br/>
 
-📋 Recepcionista: Registro y consulta de clientes y vehículos, apertura de órdenes de servicio, programación de citas (solicitud_servicio), notificación a clientes, control de entregas (entrega_vehiculo) y emisión de reportes vehiculares.
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-🔧 Técnico: Inspección técnica, registro de diagnósticos y fallas, actualización de avances diarios (seguimiento), reporte de soluciones/mantenimientos y solicitud de repuestos consumidos.
+<br/>
 
-👤 Cliente: Consulta de ficha técnica vehicular, seguimiento en tiempo real del progreso del servicio, aprobación de presupuestos de reparación y confirmación de entregas.
+![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow?style=flat-square)
+![Proyecto](https://img.shields.io/badge/Proyecto-Formativo%20SENA-00AF50?style=flat-square)
+![Base de datos](https://img.shields.io/badge/Base%20de%20datos-MySQL-blue?style=flat-square)
 
-🚀 Módulos del Sistema y Funcionalidades
+</div>
 
-El proyecto se estructura operacionalmente en cuatro grandes módulos funcionales:
+---
 
-1. 📝 Registro de Clientes y Vehículos
+## 📑 Tabla de contenidos
 
-Gestión de Clientes: Inserción y validación de datos personales de propietarios, vinculación con cuentas de acceso únicas y control de duplicados mediante documento de identidad.
+- [🚘 Descripción del proyecto](#-descripción-del-proyecto)
+- [🎯 Objetivo general](#-objetivo-general)
+- [👥 Roles y permisos](#-roles-y-permisos)
+- [⚙️ Módulos del sistema](#️-módulos-del-sistema)
+- [✨ Funcionalidades principales](#-funcionalidades-principales)
+- [📐 Calidad del software - ISOIEC 25010](#-calidad-del-software---isoiec-25010)
+- [🗄️ Arquitectura de base de datos](#️-arquitectura-de-base-de-datos)
+- [🛠️ Tecnologías utilizadas](#️-tecnologías-utilizadas)
+- [🚀 Instalación y configuración](#-instalación-y-configuración)
+- [👨‍💻 Equipo de desarrollo](#-equipo-de-desarrollo)
 
-Gestión Vehicular: Registro de ficha técnica (placa única, marca, modelo, color, año y kilometraje) asociada obligatoriamente a un cliente activo.
+---
 
-Validación y Trazabilidad: Corrección de datos, verificación de integridad y control histórico de modificaciones.
+## 🚘 Descripción del proyecto
 
-2. 🔍 Gestión de Clientes y Seguimiento
+**SenaServiControl** es un sistema de información web diseñado para la gestión integral de los procesos administrativos y operativos de una serviteca automotriz.
 
-Historial de Servicios: Consulta de intervenciones anteriores para diagnósticos preventivos y trazabilidad del vehículo.
+La solución permite centralizar la información de clientes, vehículos, mantenimientos, reparaciones y seguimiento de servicios, proporcionando una herramienta que facilita el control de las actividades y mejora la organización de la información.
 
-Sistema de Notificaciones: Emisión de alertas automáticas sobre avances, aprobación de presupuestos y aviso de vehículo listo para entrega (notificacion).
+El sistema busca reducir la dependencia de registros manuales, evitar la pérdida de información y facilitar la consulta del historial de cada vehículo, desde su recepción hasta la finalización del servicio.
 
-Bitácora de Seguimiento: Registro cronológico de avances diarios con soporte para aprendices de apoyo y técnicos encargados.
+## 🎯 Objetivo general
 
-3. 🛠️ Gestión de Servicios y Reparaciones
+Diseñar, desarrollar e implementar un sistema web que permita optimizar la gestión administrativa y operativa de una serviteca automotriz, mediante el registro, organización, seguimiento y consulta de la información relacionada con clientes, vehículos y servicios.
 
-Mantenimiento Preventivo y General: Clasificación de servicios, programación de fechas y registro de observaciones técnicas.
+---
 
-Reparaciones y Presupuestos: Diagnóstico de fallos detectados, propuesta de soluciones, desglose de repuestos consumidos (detalle_reparacion) y aprobación de presupuestos.
+## 👥 Roles y permisos
 
-Asignación y Balanceo Técnico: Asignación de responsables, reasignación con trazabilidad (historial_asignacion_tecnico) y control de estados (Pendiente, En proceso, Finalizado, Entregado).
+El sistema contempla cuatro perfiles de usuario, cada uno con funcionalidades y permisos específicos.
 
-4. 📊 Gestión Administrativa y Reportes
+| Rol | Responsabilidades |
+|---|---|
+| 🛡️ **Administrador** | Administración general, gestión de usuarios, supervisión de actividades, control de incidencias y consulta de reportes. |
+| 📋 **Recepcionista** | Registro de clientes y vehículos, gestión de solicitudes, apertura de servicios y control de entregas. |
+| 🔧 **Técnico** | Diagnóstico de fallas, registro de reparaciones, actualización de avances y seguimiento de los trabajos asignados. |
+| 👤 **Cliente** | Consulta de información personal, historial de servicios y estado de los trabajos realizados en sus vehículos. |
 
-Indicadores y Estadísticas: Análisis de demanda vehicular (marcas y modelos más atendidos), frecuencia de atención a clientes y monitoreo de retrasos operacionales.
+---
 
-Módulo de Reportes: Generación de reportes periódicos (diario, semanal, mensual) parametrizables en formatos descargables.
+## ⚙️ Módulos del sistema
 
-Auditoría e Incidencias: Módulo de monitoreo de actividades por usuario y control de incidencias o eventualidades del taller (incidencia).
+SenaServiControl está organizado en cinco módulos funcionales que permiten cubrir los principales procesos de una serviteca automotriz.
 
-📐 Estándar de Calidad ISO/IEC 25010 (Requisitos No Funcionales)
+### 1. 📝 Registro de clientes y vehículos
 
-El sistema fue diseñado y estructurado bajo los lineamientos del estándar ISO/IEC 25010:
+- Registro y actualización de información de clientes.
+- Validación de documentos de identidad y datos obligatorios.
+- Registro de vehículos asociados a cada cliente.
+- Control de placas y características de los vehículos.
+- Consulta de información registrada.
 
-⚡ Rendimiento: Tiempos de respuesta inferiores a 3 segundos en consultas complejas. Soporte de concurrencia para mínimo 20 usuarios simultáneos sin degradación de rendimiento.
+### 2. 🔍 Gestión de clientes y seguimiento
 
-🔒 Seguridad y Confidencialidad: Autenticación obligatoria mediante usuario y contraseña, arquitectura de seguridad de 8 capas y transmisión de tokens JWT.
+- Consulta del historial de servicios.
+- Seguimiento del estado de los vehículos.
+- Registro de avances y observaciones técnicas.
+- Gestión de notificaciones relacionadas con los servicios.
+- Consulta de información según el perfil de usuario.
 
-🛡️ Fiabilidad y Tolerancia a Fallos: Disponibilidad mínima del 95% del tiempo laborable, respaldo diario automatizado de base de datos y recuperación rápida ante fallas eléctricas.
+### 3. 🛠️ Gestión de servicios y reparaciones
 
-🧩 Mantenibilidad y Arquitectura: Arquitectura MVC (Modelo-Vista-Controlador) con patrones de diseño orientados a la separación de responsabilidades y modularidad.
+- Registro de mantenimientos preventivos y correctivos.
+- Administración de órdenes de servicio.
+- Diagnóstico de fallas y soluciones aplicadas.
+- Control de repuestos utilizados.
+- Asignación y seguimiento de actividades técnicas.
 
-🌐 Compatibilidad y Portabilidad: Despliegue sobre navegadores modernos (Chrome, Edge), compatibilidad con entornos Windows 10+ e integración nativa con bases de datos MariaDB / MySQL.
+### 4. 📋 Gestión administrativa
 
-🎨 Usabilidad: Interfaz limpia, intuitiva y adaptada a las necesidades operativas del personal administrativo, técnico y de recepción.
+- Administración de usuarios y roles.
+- Control de solicitudes de servicio.
+- Gestión de incidencias.
+- Registro de actividades realizadas por los usuarios.
+- Control del proceso de recepción y entrega de vehículos.
 
-📊 Estructura de la Base de Datos (sena_serviteca_1)
+### 5. 📊 Gestión de información y reportes
 
-La base de datos relacional InnoDB se compone de 19 tablas principales, 3 vistas y 4 procedimientos almacenados:
+- Consulta de servicios realizados.
+- Estadísticas de vehículos y clientes.
+- Identificación de marcas y modelos con mayor demanda.
+- Análisis de servicios y retrasos.
+- Generación de reportes periódicos.
 
-Tablas Principales: usuario, cliente, vehiculo, servicio, mantenimiento, reparacion, repuesto, detalle_reparacion, seguimiento, tecnico, recepcionista, administrador, confirmacion_notificacion, notificacion, solicitud_servicio, entrega_vehiculo.
+---
 
-Tablas de Auditoría y Control: historial_actividad_usuario, historial_asignacion_tecnico, incidencia.
+## ✨ Funcionalidades principales
 
-Vistas (Views): vista_servicios, vista_seguimiento_servicios, vista_inventario_repuestos.
+| Funcionalidad | Descripción |
+|---|---|
+| 🔐 Gestión de usuarios | Administración de cuentas y perfiles. |
+| 🚘 Gestión vehicular | Registro y consulta de vehículos. |
+| 👥 Gestión de clientes | Administración de información personal. |
+| 🔧 Control de servicios | Registro de mantenimientos y reparaciones. |
+| 📋 Seguimiento | Control de avances y estados de los servicios. |
+| 📦 Control de repuestos | Registro de insumos utilizados. |
+| 🔔 Notificaciones | Información sobre novedades de los servicios. |
+| 📈 Estadísticas | Consulta de información para la toma de decisiones. |
 
-Procedimientos Almacenados (Stored Procedures): registrar_cliente, registrar_vehiculo, registrar_servicio, actualizar_estado_servicio.
+---
 
-🛠️ Tecnologías Utilizadas
+## 📐 Calidad del software - ISO/IEC 25010
 
-Backend: PHP 8.2+ (Arquitectura MVC, Patrones de Diseño, Laravel / PHP Nativo)
+El proyecto toma como referencia el estándar **ISO/IEC 25010**, que establece características para evaluar la calidad de los productos de software.
 
-Base de Datos: MySQL / MariaDB 10.4.32 (sena_serviteca_1)
+| Característica | Aplicación en SenaServiControl |
+|---|---|
+| ⚡ Eficiencia de desempeño | Optimización de consultas y operaciones del sistema. |
+| 🔒 Seguridad | Control de acceso y protección de la información. |
+| 🛡️ Fiabilidad | Gestión consistente de los registros y operaciones. |
+| 🧩 Mantenibilidad | Organización modular del código fuente. |
+| 🌐 Compatibilidad | Acceso mediante navegadores web modernos. |
+| 📖 Usabilidad | Interfaces organizadas y adaptadas a los diferentes roles. |
 
-Frontend: HTML5, CSS3, JavaScript ES6+, Tailwind CSS / Bootstrap
+---
 
-Seguridad: JWT (JSON Web Tokens), Control de acceso RBAC, Encriptación de contraseñas.
+## 🗄️ Arquitectura de base de datos
 
-Exportación de Datos: Soporte para reportes en formato PDF y Microsoft Excel.
+El proyecto utiliza una base de datos relacional denominada `sena_serviteca_1`, diseñada para almacenar y relacionar la información de los diferentes procesos del sistema.
 
-⚡ Instalación y Configuración Local
+**Motor de almacenamiento:** InnoDB.
 
-Clonar el repositorio:
+**Estructura general:**
 
+- **Tablas principales:** usuario, cliente, vehiculo, servicio, mantenimiento, reparacion, repuesto, detalle_reparacion, seguimiento, tecnico, recepcionista, administrador, notificacion, confirmacion_notificacion, solicitud_servicio y entrega_vehiculo.
+- **Tablas de auditoría:** historial_actividad_usuario, historial_asignacion_tecnico e incidencia.
+- **Vistas:** vista_servicios, vista_seguimiento_servicios y vista_inventario_repuestos.
+- **Procedimientos almacenados:** registrar_cliente, registrar_vehiculo, registrar_servicio y actualizar_estado_servicio.
+
+La estructura permite organizar la información y establecer relaciones entre clientes, vehículos, servicios y demás procesos administrativos.
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+<div align="center">
+
+| Tecnología | Uso en el proyecto |
+|---|---|
+| HTML5 | Estructura de las interfaces. |
+| CSS3 | Diseño y presentación visual. |
+| Bootstrap 5 | Componentes y diseño adaptable. |
+| JavaScript | Interactividad y validaciones del lado del cliente. |
+| PHP | Desarrollo de la lógica del servidor. |
+| MySQL | Administración de la base de datos. |
+| XAMPP | Entorno de desarrollo local. |
+| Git y GitHub | Control de versiones y almacenamiento del código. |
+
+</div>
+
+---
+
+## 🚀 Instalación y configuración
+
+### Requisitos previos
+
+- PHP.
+- MySQL o MariaDB.
+- XAMPP, Laragon o un entorno equivalente.
+- Git.
+
+### 1. Clonar el repositorio
+
+```bash
 git clone https://github.com/juanjosesotoflorez-spec/Proyecto-SenaServiControl.git
+```
+
+### 2. Ingresar al proyecto
+
+```bash
 cd Proyecto-SenaServiControl
+```
 
+### 3. Configurar la base de datos
 
-Configurar la Base de Datos:
+1. Iniciar Apache y MySQL desde XAMPP.
+2. Ingresar a phpMyAdmin.
+3. Crear la base de datos `sena_serviteca_1`.
+4. Importar el archivo SQL incluido en el repositorio.
+5. Configurar las credenciales de conexión en el archivo de conexión de PHP.
 
-Abre phpMyAdmin, MySQL Workbench o tu cliente MySQL preferido.
+### 4. Ejecutar el proyecto
 
-Crea la base de datos sena_serviteca_1 con cotejamiento utf8mb4_general_ci.
+Ubicar la carpeta del proyecto dentro de `htdocs` si se utiliza XAMPP y acceder desde el navegador mediante:
 
-Importa el archivo de volcado SQL (sena_serviteca_1.sql) incluido en el repositorio.
+```text
+http://localhost/Proyecto-SenaServiControl/
+```
 
-Configurar Servidor Web Local:
+---
 
-Utiliza XAMPP, WAMP, Laragon o el servidor embebido de PHP:
+## 👨‍💻 Equipo de desarrollo
 
-php -S localhost:8000
+Proyecto desarrollado como parte del proceso de formación del programa **Tecnólogo en Análisis y Desarrollo de Software (ADSO)** del Servicio Nacional de Aprendizaje (SENA).
 
+<div align="center">
 
-✒️ Autores
+| Integrante | Rol |
+|---|---|
+| **Juan José Soto Flórez** | Desarrollo de software |
+| **Samuel Quintero Restrepo** | Scrum Master |
+| **Emmanuel Ospina Alzate** | Desarrollo Frontend |
+| **Juan José Areiza Sánchez** | Desarrollo de software |
 
-Proyecto formativo desarrollado para el SENA (Servicio Nacional de Aprendizaje) por:
+</div>
 
-Juan Jose Soto Florez
+---
 
-Samuel Quintero Restrepo
+<div align="center">
 
-Emmanuel Ospina Alzate
+### 🚗 SenaServiControl
 
-Juan Jose Areiza Sanchez
+**Transformando la gestión automotriz mediante soluciones de software.**
+
+Desarrollado con dedicación como proyecto formativo del SENA.
+
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:003D24,50:00AF50,100:006B35&height=110&section=footer"/>
+
+</div>
