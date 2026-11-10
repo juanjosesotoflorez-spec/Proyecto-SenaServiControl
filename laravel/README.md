@@ -12,7 +12,7 @@ Aplicación web sobre Laravel 12 y PHP 8.2 para administrar clientes, vehículos
 
 ## Instalación local
 
-1. Importa `../database/sena_serviteca_1.sql` en MySQL/MariaDB.
+1. Prepara una base MySQL/MariaDB `sena_serviteca_1` con el esquema compatible y sin datos personales reales. No publiques volcados con información de clientes.
 2. Desde esta carpeta ejecuta:
 
    ```sh
@@ -23,7 +23,7 @@ Aplicación web sobre Laravel 12 y PHP 8.2 para administrar clientes, vehículos
    npm run build
    ```
 
-3. Configura `.env` con el nombre de la base de datos, usuario y contraseña locales.
+3. Configura `.env` con el nombre de la base de datos, usuario y contraseña locales. Genera un secreto JWT independiente con `php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"` y guárdalo como `JWT_SECRET` en `.env`; nunca publiques ese valor.
 4. En XAMPP, configura el `DocumentRoot` del virtual host directamente en `laravel/public`. Si se mantiene el repositorio dentro de `htdocs`, el `.htaccess` de la raíz redirige el acceso a `laravel/public`.
 5. Ajusta `APP_URL` a la URL base real (por ejemplo, `http://localhost/SENA_SERVITECA_1/laravel/public` al acceder mediante la redirección de XAMPP).
 6. Inicia Apache y MySQL y visita la URL del virtual host.
@@ -38,6 +38,23 @@ npm run build
 ```
 
 Laravel enruta las peticiones web mediante `public/index.php`; `public/.htaccess` reescribe las rutas no físicas a ese front controller. Bootstrap 5 se incluye en el build de Vite junto con sus componentes JavaScript.
+
+## API JWT
+
+Las páginas Blade conservan la autenticación por sesión. Para cada endpoint protegido, envía el JWT obtenido al iniciar sesión en la cabecera de autorización usando el esquema `Bearer`.
+
+| Método | Endpoint | Acceso |
+|---|---|---|
+| `POST` | `api/auth/login` | Público; valida `correo` y `contrasena`, devuelve JWT HS256 y rol. |
+| `POST` | `api/register` | Público con límite de intentos; registra cuenta y datos únicos del cliente. |
+| `GET` | `api/auth/me` | Cualquier usuario autenticado por JWT. |
+| `POST` | `api/auth/logout` | Cualquier usuario autenticado; revoca el token actual. |
+| `GET` | `api/clientes` | Administrador o recepción. |
+| `PUT` | `api/me/contact` | Cliente autenticado; actualiza sus datos de contacto. |
+| `GET`, `POST` | `api/vehiculos` | Administrador, recepción o cliente; los clientes solo ven o registran sus vehículos. |
+| `GET` | `api/vehiculos/{vehiculo}` | Mismos roles; un cliente no puede consultar vehículos ajenos. |
+
+Los tokens duran 60 minutos por defecto; puedes ajustarlo con `JWT_TTL`. Configura `JWT_ISSUER` solo si necesitas fijar un emisor diferente de `APP_URL`. La colección de datos se valida en el servidor y las contraseñas nunca se devuelven en las respuestas JSON.
 
 ## Reportes
 

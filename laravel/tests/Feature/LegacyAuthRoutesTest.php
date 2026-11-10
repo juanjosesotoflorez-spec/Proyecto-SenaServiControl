@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Enums\EstadoUsuario;
 use App\Enums\RolUsuario;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ViewErrorBag;
 use Tests\TestCase;
 
@@ -76,5 +77,31 @@ class LegacyAuthRoutesTest extends TestCase
             'correo' => 'no-es-un-correo',
             'contrasena' => '',
         ])->assertSessionHasErrors(['correo', 'contrasena']);
+    }
+
+    public function test_security_headers_are_added_to_web_responses(): void
+    {
+        $this->get(route('login'))
+            ->assertOk()
+            ->assertHeader('X-Content-Type-Options', 'nosniff')
+            ->assertHeader('X-Frame-Options', 'SAMEORIGIN')
+            ->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
+            ->assertHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    }
+
+    public function test_role_middleware_rejects_a_user_without_the_required_role(): void
+    {
+        Route::middleware(['auth', 'role:administrador'])
+            ->get('/test/admin-only', static fn () => response()->noContent());
+
+        $usuario = new Usuario;
+        $usuario->forceFill([
+            'id_usuario' => 1,
+            'usuario' => 'Cliente',
+            'rol' => RolUsuario::Cliente,
+            'estado' => EstadoUsuario::Activo,
+        ]);
+
+        $this->actingAs($usuario)->get('/test/admin-only')->assertForbidden();
     }
 }
