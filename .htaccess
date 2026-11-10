@@ -1,7 +1,11 @@
 Options -Indexes
 RewriteEngine On
 
-# The repository is served from htdocs/SENA_SERVITECA_1 in local XAMPP.
+# Serve the static landing page and its assets at the project root.
 RewriteBase /SENA_SERVITECA_1/
+RewriteRule ^$ index.html [L]
+RewriteRule ^(?:index\.html|css/.*|js/.*|imagenes/.*)$ - [L,NC]
+
+# Route application requests through Laravel's public front controller.
 RewriteCond %{REQUEST_URI} !^/SENA_SERVITECA_1/laravel/public(?:/|$) [NC]
 RewriteRule ^(.*)$ laravel/public/$1 [R=302,L]
