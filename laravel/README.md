@@ -41,13 +41,20 @@ Laravel enruta las peticiones web mediante `public/index.php`; `public/.htaccess
 
 ## API JWT
 
-Las páginas Blade conservan la autenticación por sesión. Para clientes API:
+Las páginas Blade conservan la autenticación por sesión. Para cada endpoint protegido, envía el JWT obtenido al iniciar sesión en la cabecera de autorización usando el esquema `Bearer`.
 
-1. `POST /api/auth/login` recibe `correo` y `contrasena`, y devuelve un token Bearer firmado con HS256 y con el rol del usuario.
-2. Envía `Authorization: Bearer <token>` a `GET /api/auth/me`.
-3. `POST /api/auth/logout` revoca el token hasta su expiración.
+| Método | Endpoint | Acceso |
+|---|---|---|
+| `POST` | `api/auth/login` | Público; valida `correo` y `contrasena`, devuelve JWT HS256 y rol. |
+| `POST` | `api/register` | Público con límite de intentos; registra cuenta y datos únicos del cliente. |
+| `GET` | `api/auth/me` | Cualquier usuario autenticado por JWT. |
+| `POST` | `api/auth/logout` | Cualquier usuario autenticado; revoca el token actual. |
+| `GET` | `api/clientes` | Administrador o recepción. |
+| `PUT` | `api/me/contact` | Cliente autenticado; actualiza sus datos de contacto. |
+| `GET`, `POST` | `api/vehiculos` | Administrador, recepción o cliente; los clientes solo ven o registran sus vehículos. |
+| `GET` | `api/vehiculos/{vehiculo}` | Mismos roles; un cliente no puede consultar vehículos ajenos. |
 
-Los tokens duran 60 minutos por defecto; puedes ajustarlo con `JWT_TTL`. Configura `JWT_ISSUER` solo si necesitas fijar un emisor diferente de `APP_URL`.
+Los tokens duran 60 minutos por defecto; puedes ajustarlo con `JWT_TTL`. Configura `JWT_ISSUER` solo si necesitas fijar un emisor diferente de `APP_URL`. La colección de datos se valida en el servidor y las contraseñas nunca se devuelven en las respuestas JSON.
 
 ## Reportes
 
