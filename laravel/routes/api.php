@@ -12,3 +12,5 @@ Route::middleware(AuthenticateJwt::class)->group(function (): void {
     Route::get('/auth/me', [AuthController::class, 'show'])->name('api.auth.me');
     Route::post('/auth/logout', [AuthController::class, 'destroy'])->name('api.auth.logout');
 });
+
+require __DIR__.'/api/clientes.php';
