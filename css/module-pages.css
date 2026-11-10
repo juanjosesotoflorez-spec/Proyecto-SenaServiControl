@@ -1,0 +1,399 @@
+.module-page {
+  min-height: 100vh;
+  background: #f4f6f4;
+  color: #171917;
+}
+
+.module-page .admin-layout {
+  display: block;
+  min-height: 100vh;
+}
+
+.module-page .admin-sidebar {
+  width: 100%;
+  padding: 0 clamp(16px, 4vw, 48px);
+  border-bottom: 1px solid #dfe4df;
+  background: #ffffff;
+  color: #171917;
+}
+
+.module-page .sidebar-brand,
+.module-page .sidebar-nav {
+  width: min(100%, 1480px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.module-page .sidebar-brand {
+  padding: 14px 0 7px;
+  border: 0;
+}
+
+.module-page .sidebar-brand h4 {
+  margin: 0;
+  color: #008800;
+  font-size: 0.98rem;
+  font-weight: 750;
+}
+
+.module-page .sidebar-nav {
+  flex-direction: row;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 0 0 12px;
+  scrollbar-width: thin;
+}
+
+.module-page .sidebar-nav a {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #343834;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.module-page .sidebar-nav a.active,
+.module-page .sidebar-nav a:hover {
+  border-color: rgba(0, 175, 0, 0.22);
+  background: rgba(0, 175, 0, 0.09);
+  color: #007c00;
+}
+
+.module-page .admin-content {
+  width: min(100%, 1480px);
+  min-height: calc(100vh - 104px);
+  margin: 0 auto;
+  padding: clamp(22px, 4vw, 48px);
+  background: transparent;
+}
+
+.module-page .admin-content::before {
+  display: block;
+  margin-bottom: 8px;
+  color: #707870;
+  content: "SENA SERVICONTROL";
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+
+.module-page .admin-content > h2.section-title,
+.module-page .admin-content > .admin-header h2.section-title {
+  margin: 0 0 22px;
+  padding-left: 14px;
+  border-left: 5px solid var(--module-accent, #00af00);
+  color: #171917;
+  font-size: clamp(1.55rem, 2.4vw, 2.05rem);
+  font-weight: 750;
+}
+
+.module-page .admin-content .dashboard-panel {
+  border: 1px solid #dfe4df;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(25, 45, 25, 0.045);
+  padding: clamp(16px, 2.4vw, 26px);
+}
+
+.module-page .admin-content .table thead th {
+  background: #f0f7f0;
+  color: #303730;
+  font-size: 0.84rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.module-page .admin-content .table > :not(caption) > * > * {
+  padding: 0.75rem;
+}
+
+.module-page .admin-content .card {
+  border-color: #dfe4df !important;
+  box-shadow: 0 8px 22px rgba(25, 45, 25, 0.045) !important;
+}
+
+.module-page .form-control:focus,
+.module-page .form-select:focus {
+  border-color: var(--module-accent, #00af00);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--module-accent, #00af00) 16%, transparent);
+}
+
+.module-admin-clients,
+.module-reception-clients {
+  --module-accent: #00af00;
+}
+
+.module-admin-clients .admin-content::before {
+  content: "ADMINISTRACIÓN · DIRECTORIO DE CLIENTES";
+}
+
+.module-reception-clients .admin-content::before {
+  content: "RECEPCIÓN · BÚSQUEDA DE CLIENTES";
+}
+
+.module-admin-vehicles,
+.module-reception-vehicles,
+.module-customer-vehicles {
+  --module-accent: #16834a;
+}
+
+.module-admin-vehicles .admin-content::before {
+  content: "ADMINISTRACIÓN · PARQUE AUTOMOTOR";
+}
+
+.module-reception-vehicles .admin-content::before {
+  content: "RECEPCIÓN · CONSULTA DE VEHÍCULOS";
+}
+
+.module-customer-vehicles .admin-content::before {
+  content: "MI CUENTA · MIS VEHÍCULOS";
+}
+
+.module-admin-services,
+.module-reception-services,
+.module-customer-services {
+  --module-accent: #397a46;
+}
+
+.module-admin-services .admin-content::before {
+  content: "ADMINISTRACIÓN · CONTROL DE SERVICIOS";
+}
+
+.module-reception-services .admin-content::before {
+  content: "RECEPCIÓN · SERVICIOS REGISTRADOS";
+}
+
+.module-customer-services .admin-content::before {
+  content: "MI CUENTA · MIS SERVICIOS";
+}
+
+.module-users {
+  --module-accent: #006f3c;
+}
+
+.module-users .admin-content::before {
+  content: "ADMINISTRACIÓN · CUENTAS Y ACCESOS";
+}
+
+.module-parts {
+  --module-accent: #66823c;
+}
+
+.module-parts .admin-content::before {
+  content: "INVENTARIO · REPUESTOS";
+}
+
+.module-assignments {
+  --module-accent: #4c7a32;
+}
+
+.module-assignments .admin-content::before {
+  content: "TALLER · ASIGNACIÓN DE RESPONSABLES";
+}
+
+.module-deliveries {
+  --module-accent: #00866a;
+}
+
+.module-deliveries .admin-content::before {
+  content: "RECEPCIÓN · ENTREGA DE VEHÍCULOS";
+}
+
+.module-history,
+.module-activity {
+  --module-accent: #727d72;
+}
+
+.module-history .admin-content::before {
+  content: "CONSULTAS · HISTORIAL DE SERVICIO";
+}
+
+.module-activity .admin-content::before {
+  content: "AUDITORÍA · ACTIVIDAD REGISTRADA";
+}
+
+.module-reports {
+  --module-accent: #47734c;
+}
+
+.module-reports .admin-content::before {
+  content: "ANÁLISIS · INDICADORES Y REPORTES";
+}
+
+.module-incidents {
+  --module-accent: #7b6b34;
+}
+
+.module-incidents .admin-content::before {
+  content: "SOPORTE · INCIDENCIAS";
+}
+
+.module-notifications {
+  --module-accent: #2f806b;
+}
+
+.module-notifications .admin-content::before {
+  content: "COMUNICACIONES · AVISOS DEL SISTEMA";
+}
+
+.module-maintenance {
+  --module-accent: #50823e;
+}
+
+.module-maintenance .admin-content::before {
+  content: "TALLER · MANTENIMIENTOS";
+}
+
+.module-repairs,
+.module-repairs-tech,
+.module-workshop-services,
+.module-workshop-tracking {
+  --module-accent: #006b3c;
+}
+
+.module-repairs .admin-content::before,
+.module-repairs-tech .admin-content::before {
+  content: "TALLER · DIAGNÓSTICO Y REPARACIÓN";
+}
+
+.module-workshop-services .admin-content::before {
+  content: "ÁREA TÉCNICA · SERVICIOS ASIGNADOS";
+}
+
+.module-workshop-tracking .admin-content::before {
+  content: "ÁREA TÉCNICA · REGISTRO DE AVANCE";
+}
+
+.module-service-registration,
+.module-client-registration,
+.module-vehicle-registration,
+.module-customer-vehicle-registration {
+  --module-accent: #00af00;
+}
+
+.module-service-registration .admin-content::before {
+  content: "RECEPCIÓN · NUEVO INGRESO";
+}
+
+.module-client-registration .admin-content::before {
+  content: "RECEPCIÓN · ALTA DE CLIENTE";
+}
+
+.module-vehicle-registration .admin-content::before {
+  content: "RECEPCIÓN · ALTA DE VEHÍCULO";
+}
+
+.module-customer-vehicle-registration .admin-content::before {
+  content: "MI CUENTA · REGISTRO DE VEHÍCULO";
+}
+
+.module-profile {
+  --module-accent: #008800;
+}
+
+.module-profile main::before {
+  display: block;
+  width: min(100% - 32px, 1100px);
+  margin: 30px auto 0;
+  color: #707870;
+  content: "MI CUENTA · INFORMACIÓN PERSONAL";
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+
+.module-page .admin-content > .d-flex:first-child {
+  align-items: center;
+  gap: 12px;
+}
+
+.module-admin-clients .admin-content > .dashboard-panel.mb-4,
+.module-reception-clients .admin-content > .dashboard-panel.mb-4 {
+  border-top: 4px solid var(--module-accent);
+  background: #ffffff;
+}
+
+.module-admin-clients .admin-content > .dashboard-panel:not(.mb-4) {
+  background: #ffffff;
+}
+
+.module-reception-clients .admin-content > .dashboard-panel:not(.mb-4) {
+  border-left: 4px solid #b8dfbd;
+  background: #fbfefb;
+}
+
+.module-admin-vehicles .admin-content > .dashboard-panel.mb-4,
+.module-reception-vehicles .admin-content > .dashboard-panel.mb-4 {
+  border-left: 5px solid var(--module-accent);
+  background: #f8fcf8;
+}
+
+.module-admin-vehicles .table tbody tr:hover,
+.module-reception-vehicles .table tbody tr:hover {
+  background: #f0f8f0;
+}
+
+.module-admin-services .admin-content > .dashboard-panel.mb-4,
+.module-reception-services .admin-content > .dashboard-panel.mb-4,
+.module-customer-services .admin-content > .dashboard-panel.mb-4 {
+  border-bottom: 4px solid var(--module-accent);
+  background: #ffffff;
+}
+
+.module-users .admin-content > .dashboard-panel.mb-4 {
+  border-top: 4px solid var(--module-accent);
+}
+
+.module-parts .admin-content .table tbody tr:nth-child(even),
+.module-history .admin-content .table tbody tr:nth-child(even),
+.module-activity .admin-content .table tbody tr:nth-child(even) {
+  background: #f7f9f7;
+}
+
+.module-assignments .admin-content > .dashboard-panel.mb-4,
+.module-maintenance .admin-content > .dashboard-panel.mb-4,
+.module-repairs .admin-content > .dashboard-panel.mb-4,
+.module-repairs-tech .admin-content > .dashboard-panel.mb-4 {
+  border-top: 4px solid var(--module-accent);
+}
+
+.module-deliveries .admin-content .dashboard-panel,
+.module-notifications .admin-content .dashboard-panel {
+  border-left: 4px solid var(--module-accent);
+}
+
+.module-incidents .admin-content .dashboard-panel,
+.module-reports .admin-content .dashboard-panel {
+  border-top: 3px solid var(--module-accent);
+}
+
+.module-workshop-services .admin-content .table tbody tr td:nth-child(5),
+.module-workshop-tracking .admin-content .table tbody tr td:nth-child(5) {
+  font-weight: 700;
+}
+
+.module-client-registration .card,
+.module-vehicle-registration .card,
+.module-customer-vehicle-registration .card {
+  border-top: 5px solid var(--module-accent) !important;
+}
+
+@media (max-width: 576px) {
+  .module-page .admin-sidebar {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .module-page .sidebar-nav {
+    margin-right: -14px;
+    margin-left: -14px;
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .module-page .admin-content {
+    min-height: calc(100vh - 100px);
+    padding: 22px 14px 30px;
+  }
+}
