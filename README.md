@@ -409,7 +409,7 @@ Proyecto-SenaServiControl/laravel/public
 
 Se recomienda configurar un VirtualHost de Apache cuyo `DocumentRoot` sea directamente esa carpeta.
 
-Como alternativa, el repositorio incluye un archivo `.htaccess` en su raíz que contempla la redirección hacia `laravel/public`. Si utilizas esta alternativa, comprueba que `mod_rewrite` esté habilitado y ajusta `APP_URL` a la dirección utilizada.
+Como alternativa para XAMPP, el `.htaccess` de la raíz muestra `index.html` al abrir la URL del proyecto y conserva sus recursos estáticos. La aplicación Laravel permanece disponible en `/laravel/public/` (por ejemplo, `/SENA_SERVITECA_1/laravel/public/login`). Comprueba que `mod_rewrite` esté habilitado y configura `APP_URL` según la URL de Laravel.
 
 **Importante:** No configures Apache para publicar directamente la carpeta `laravel/`, ya que los archivos internos de Laravel no deben quedar expuestos.
 
