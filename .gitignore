@@ -1,0 +1,45 @@
+# Composer dependencies
+/vendor/
+**/vendor/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+/db.php
+*.sql
+
+# The Laravel application and its Composer manifests live in /laravel
+/composer.json
+/composer.lock
+
+# Laravel generated files
+/laravel/bootstrap/cache/*.php
+/laravel/storage/*.key
+/laravel/storage/framework/cache/data/*
+!/laravel/storage/framework/cache/data/.gitignore
+/laravel/storage/framework/sessions/*
+!/laravel/storage/framework/sessions/.gitignore
+/laravel/storage/framework/testing/*
+!/laravel/storage/framework/testing/.gitignore
+/laravel/storage/framework/views/*
+!/laravel/storage/framework/views/.gitignore
+/laravel/storage/logs/*
+!/laravel/storage/logs/.gitignore
+
+# Frontend dependencies and build output
+node_modules/
+/laravel/public/build/
+/laravel/public/hot
+
+# Test and tool caches
+.phpunit.cache/
+.phpunit.result.cache
+
+# Temporary and local files
+*.log
+*.tmp
+*.bak
+.vscode/
+Thumbs.db
+Desktop.ini
