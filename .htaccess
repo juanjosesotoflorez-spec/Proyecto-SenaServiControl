@@ -1,6 +1,7 @@
 Options -Indexes
 RewriteEngine On
 
-# Expose only Laravel's public directory when this repository is under htdocs.
-RewriteCond %{REQUEST_URI} !/laravel/public(?:/|$) [NC]
+# The repository is served from htdocs/SENA_SERVITECA_1 in local XAMPP.
+RewriteBase /SENA_SERVITECA_1/
+RewriteCond %{REQUEST_URI} !^/SENA_SERVITECA_1/laravel/public(?:/|$) [NC]
 RewriteRule ^(.*)$ laravel/public/$1 [R=302,L]
