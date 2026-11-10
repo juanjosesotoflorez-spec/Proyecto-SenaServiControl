@@ -15,3 +15,4 @@ Route::middleware(AuthenticateJwt::class)->group(function (): void {
 
 require __DIR__.'/api/clientes.php';
 require __DIR__.'/api/contacto.php';
+require __DIR__.'/api/vehiculos.php';
