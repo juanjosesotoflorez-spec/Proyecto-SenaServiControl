@@ -12,7 +12,7 @@ Aplicación web sobre Laravel 12 y PHP 8.2 para administrar clientes, vehículos
 
 ## Instalación local
 
-1. Importa `../database/sena_serviteca_1.sql` en MySQL/MariaDB.
+1. Prepara una base MySQL/MariaDB `sena_serviteca_1` con el esquema compatible y sin datos personales reales. No publiques volcados con información de clientes.
 2. Desde esta carpeta ejecuta:
 
    ```sh
@@ -23,7 +23,7 @@ Aplicación web sobre Laravel 12 y PHP 8.2 para administrar clientes, vehículos
    npm run build
    ```
 
-3. Configura `.env` con el nombre de la base de datos, usuario y contraseña locales.
+3. Configura `.env` con el nombre de la base de datos, usuario y contraseña locales. Genera un secreto JWT independiente con `php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"` y guárdalo como `JWT_SECRET` en `.env`; nunca publiques ese valor.
 4. En XAMPP, configura el `DocumentRoot` del virtual host directamente en `laravel/public`. Si se mantiene el repositorio dentro de `htdocs`, el `.htaccess` de la raíz redirige el acceso a `laravel/public`.
 5. Ajusta `APP_URL` a la URL base real (por ejemplo, `http://localhost/SENA_SERVITECA_1/laravel/public` al acceder mediante la redirección de XAMPP).
 6. Inicia Apache y MySQL y visita la URL del virtual host.
@@ -38,6 +38,16 @@ npm run build
 ```
 
 Laravel enruta las peticiones web mediante `public/index.php`; `public/.htaccess` reescribe las rutas no físicas a ese front controller. Bootstrap 5 se incluye en el build de Vite junto con sus componentes JavaScript.
+
+## API JWT
+
+Las páginas Blade conservan la autenticación por sesión. Para clientes API:
+
+1. `POST /api/auth/login` recibe `correo` y `contrasena`, y devuelve un token Bearer firmado con HS256 y con el rol del usuario.
+2. Envía `Authorization: Bearer <token>` a `GET /api/auth/me`.
+3. `POST /api/auth/logout` revoca el token hasta su expiración.
+
+Los tokens duran 60 minutos por defecto; puedes ajustarlo con `JWT_TTL`. Configura `JWT_ISSUER` solo si necesitas fijar un emisor diferente de `APP_URL`.
 
 ## Reportes
 
