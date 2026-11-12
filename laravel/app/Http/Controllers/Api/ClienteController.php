@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enums\EstadoUsuario;
 use App\Enums\RolUsuario;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\RegisterClienteRequest;
+use App\Http\Requests\RegisterClienteRequest;
 use App\Http\Resources\ClienteResource;
 use App\Models\Cliente;
 use App\Models\Usuario;

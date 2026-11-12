@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <label class="form-check-label" for="showPasswordLogin">Mostrar contraseña</label>
             </div>
             <button type="submit" class="btn btn-verde w-100 mb-3">Entrar</button>
-            <a href="../index.html" class="btn btn-outline-verde w-100">Volver al inicio</a>
+            <a href="../../index.html" class="btn btn-outline-verde w-100">Volver al inicio</a>
           </form>
           <p class="mt-3 text-center mb-0">
             ¿No tienes cuenta? <a href="register.php">Regístrate</a>

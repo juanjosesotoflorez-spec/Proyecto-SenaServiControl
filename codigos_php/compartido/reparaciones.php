@@ -247,10 +247,10 @@ if ($rol === 'recepcionista') {
 <title>Reparaciones</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/module-pages.css?v=20261022"><script src="../js/form-validation.js?v=20261109-confirm" defer></script></head>
 <body class="admin-body module-page module-repairs"><div class="admin-layout">
 <aside class="admin-sidebar"><div class="sidebar-brand"><h4>Reparaciones</h4></div><nav class="sidebar-nav">
-<?php if ($rol==='cliente'): ?><a href="dashboard_cliente.php">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a>
-<?php elseif ($rol==='tecnico'): ?><a href="dashboard_tecnico.php">Volver al panel</a><a href="tecnico_servicios.php">Servicios asignados</a>
-<?php elseif ($rol==='administrador'): ?><a href="dashboard_admin.php">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
-<?php else: ?><a href="dashboard_recepcionista.php">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a><?php endif; ?>
+<?php if ($rol==='cliente'): ?><a href="../../index.html">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a>
+<?php elseif ($rol==='tecnico'): ?><a href="../../index.html">Volver al panel</a><a href="tecnico_servicios.php">Servicios asignados</a>
+<?php elseif ($rol==='administrador'): ?><a href="../../index.html">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
+<?php else: ?><a href="../../index.html">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a><?php endif; ?>
 <a href="reparaciones.php" class="active">Reparaciones</a><a href="logout.php">Salir</a></nav></aside>
 <main class="admin-content"><h2 class="section-title">Gestión de reparaciones</h2>
 <p class="texto-gris">La reparación solo puede ejecutarse con presupuesto aprobado por el cliente.</p>

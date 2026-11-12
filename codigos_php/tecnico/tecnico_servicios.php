@@ -64,7 +64,7 @@ if ($tecnico) {
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4>Técnico</h4></div>
       <nav class="sidebar-nav">
-        <a href="dashboard_tecnico.php">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="tecnico_servicios.php" class="active">Servicios del taller</a>
         <a href="seguimiento_tecnico.php">Seguimiento</a>
         <a href="mantenimientos.php">Mantenimientos</a>

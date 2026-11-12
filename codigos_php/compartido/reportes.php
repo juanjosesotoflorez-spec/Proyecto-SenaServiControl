@@ -291,10 +291,10 @@ $moneda = static function ($valor): string {
 <body class="admin-body module-page module-reports">
 <div class="admin-layout">
   <aside class="admin-sidebar"><div class="sidebar-brand"><h4>Reportes</h4></div><nav class="sidebar-nav">
-    <?php if ($rol === 'administrador'): ?><a href="dashboard_admin.php">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
-    <?php elseif ($rol === 'recepcionista'): ?><a href="dashboard_recepcionista.php">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a>
-    <?php elseif ($rol === 'tecnico'): ?><a href="dashboard_tecnico.php">Volver al panel</a><a href="tecnico_servicios.php">Servicios asignados</a>
-    <?php else: ?><a href="dashboard_cliente.php">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a><a href="cliente_vehiculos.php">Mis vehículos</a><?php endif; ?>
+    <?php if ($rol === 'administrador'): ?><a href="../../index.html">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
+    <?php elseif ($rol === 'recepcionista'): ?><a href="../../index.html">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a>
+    <?php elseif ($rol === 'tecnico'): ?><a href="../../index.html">Volver al panel</a><a href="tecnico_servicios.php">Servicios asignados</a>
+    <?php else: ?><a href="../../index.html">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a><a href="cliente_vehiculos.php">Mis vehículos</a><?php endif; ?>
     <a href="reportes.php" class="active">Reportes e indicadores</a>
     <?php if ($rol === 'administrador' || $rol === 'recepcionista'): ?><a href="historial_actividades.php">Historial de actividades</a><a href="incidencias.php">Incidencias</a>
     <?php elseif ($rol === 'tecnico'): ?><a href="incidencias.php">Reportar incidencia</a><?php endif; ?>

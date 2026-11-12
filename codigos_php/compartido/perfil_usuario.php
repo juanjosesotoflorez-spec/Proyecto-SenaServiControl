@@ -245,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4><?= htmlspecialchars($perfilConfig['etiqueta']) ?></h4></div>
       <nav class="sidebar-nav">
-        <a href="<?= htmlspecialchars($perfilConfig['panel']) ?>">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="perfil_usuario.php" class="active">Mi perfil</a>
         <a href="logout.php">Cerrar sesión</a>
       </nav>

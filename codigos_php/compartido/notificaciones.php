@@ -201,15 +201,15 @@ if (in_array($rol, ['administrador', 'recepcionista'], true)) {
       <div class="sidebar-brand"><h4><?= $rol === 'cliente' ? 'Cliente' : ($rol === 'administrador' ? 'Administración' : 'Recepción') ?></h4></div>
       <nav class="sidebar-nav">
         <?php if ($rol === 'cliente'): ?>
-          <a href="dashboard_cliente.php">Volver al panel</a>
+          <a href="../../index.html">Volver al panel</a>
           <a href="cliente_vehiculos.php">Mis vehículos</a>
           <a href="cliente_servicios.php">Mis servicios</a>
         <?php elseif ($rol === 'administrador'): ?>
-          <a href="dashboard_admin.php">Volver al panel</a>
+          <a href="../../index.html">Volver al panel</a>
           <a href="admin_servicios.php">Servicios</a>
           <a href="notificaciones.php" class="active">Notificaciones</a>
         <?php else: ?>
-          <a href="dashboard_recepcionista.php">Volver al panel</a>
+          <a href="../../index.html">Volver al panel</a>
           <a href="recepcionista_servicios.php">Servicios</a>
           <a href="registro_servicios.php">Registrar servicio</a>
           <a href="notificaciones.php" class="active">Notificaciones</a>

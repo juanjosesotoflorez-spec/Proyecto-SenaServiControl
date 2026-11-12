@@ -221,7 +221,7 @@ if ($result = $conn->query('SELECT id_usuario, usuario, correo, rol, estado FROM
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4>Administración</h4></div>
       <nav class="sidebar-nav">
-        <a href="dashboard_admin.php">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="admin_usuarios.php" class="active">Usuarios</a>
         <a href="admin_vehiculos.php">Vehículos</a>
         <a href="admin_servicios.php">Servicios</a>

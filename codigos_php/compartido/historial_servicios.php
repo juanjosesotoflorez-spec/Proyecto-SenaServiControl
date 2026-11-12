@@ -190,13 +190,13 @@ $titulo = $rol === 'cliente' ? 'Mi historial de servicios' : 'Historial de servi
     <div class="sidebar-brand"><h4><?= $rol === 'cliente' ? 'Cliente' : ($rol === 'tecnico' ? 'Técnico' : 'Serviteca') ?></h4></div>
     <nav class="sidebar-nav">
       <?php if ($rol === 'administrador'): ?>
-        <a href="dashboard_admin.php">Volver al panel</a><a href="admin_clientes.php">Clientes</a><a href="admin_vehiculos.php">Vehículos</a><a href="admin_servicios.php">Servicios</a>
+        <a href="../../index.html">Volver al panel</a><a href="admin_clientes.php">Clientes</a><a href="admin_vehiculos.php">Vehículos</a><a href="admin_servicios.php">Servicios</a>
       <?php elseif ($rol === 'recepcionista'): ?>
-        <a href="dashboard_recepcionista.php">Volver al panel</a><a href="recepcionista_clientes.php">Clientes</a><a href="recepcionista_vehiculos.php">Vehículos</a><a href="recepcionista_servicios.php">Servicios</a>
+        <a href="../../index.html">Volver al panel</a><a href="recepcionista_clientes.php">Clientes</a><a href="recepcionista_vehiculos.php">Vehículos</a><a href="recepcionista_servicios.php">Servicios</a>
       <?php elseif ($rol === 'tecnico'): ?>
-        <a href="dashboard_tecnico.php">Volver al panel</a><a href="tecnico_servicios.php">Servicios del taller</a><a href="seguimiento_tecnico.php">Seguimiento</a>
+        <a href="../../index.html">Volver al panel</a><a href="tecnico_servicios.php">Servicios del taller</a><a href="seguimiento_tecnico.php">Seguimiento</a>
       <?php else: ?>
-        <a href="dashboard_cliente.php">Volver al panel</a><a href="cliente_vehiculos.php">Mis vehículos</a><a href="cliente_servicios.php">Mis servicios</a>
+        <a href="../../index.html">Volver al panel</a><a href="cliente_vehiculos.php">Mis vehículos</a><a href="cliente_servicios.php">Mis servicios</a>
       <?php endif; ?>
       <a href="historial_servicios.php" class="active">Historial</a><a href="logout.php">Salir</a>
     </nav>

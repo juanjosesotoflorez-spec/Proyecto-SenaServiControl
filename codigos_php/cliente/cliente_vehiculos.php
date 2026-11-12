@@ -55,7 +55,7 @@ if ($cliente) {
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4>Cliente</h4></div>
       <nav class="sidebar-nav">
-        <a href="dashboard_cliente.php">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="cliente_vehiculos.php" class="active">Mis vehículos</a>
         <a href="cliente_servicios.php">Mis servicios</a>
         <a href="logout.php">Salir</a>

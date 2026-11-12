@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'edita
         </button>
         <div class="collapse navbar-collapse" id="menuCliente">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2">
-            <li class="nav-item"><a class="nav-link" href="<?= $basePath ?>dashboard_cliente.php">Volver al panel</a></li>
+            <li class="nav-item"><a class="nav-link" href="../../index.html">Volver al panel</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= $basePath ?>cliente_vehiculos.php">Mis vehículos</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= $basePath ?>cliente_servicios.php">Mis servicios</a></li>
             <li class="nav-item"><a class="nav-link active" href="<?= $basePath ?>cliente_perfil.php">Mi perfil</a></li>
@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'edita
                 </div>
                 <h4 class="fw-bold mb-1"><?= htmlspecialchars($cliente['nombre'] ?? 'Cliente') ?> <?= htmlspecialchars($cliente['apellido'] ?? '') ?></h4>
                 <p class="text-muted mb-3">Información personal del cliente</p>
-                <a href="<?= $basePath ?>dashboard_cliente.php" class="btn btn-outline-verde rounded-pill">Volver al panel</a>
+                <a href="../../index.html" class="btn btn-outline-verde rounded-pill">Volver al panel</a>
               </div>
             </div>
           </div>

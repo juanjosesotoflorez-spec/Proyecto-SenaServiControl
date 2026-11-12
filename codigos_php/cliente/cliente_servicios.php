@@ -92,7 +92,7 @@ if ($cliente && !$errorFiltro) {
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4>Cliente</h4></div>
       <nav class="sidebar-nav">
-        <a href="dashboard_cliente.php">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="cliente_vehiculos.php">Mis vehículos</a>
         <a href="cliente_servicios.php" class="active">Mis servicios</a>
         <a href="historial_servicios.php">Historial</a>

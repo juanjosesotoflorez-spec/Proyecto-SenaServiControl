@@ -52,7 +52,7 @@ $clientes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4>Recepción</h4></div>
       <nav class="sidebar-nav">
-        <a href="dashboard_recepcionista.php">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="recepcionista_clientes.php" class="active">Clientes</a>
         <a href="recepcionista_vehiculos.php">Vehículos</a>
         <a href="recepcionista_servicios.php">Servicios</a>
