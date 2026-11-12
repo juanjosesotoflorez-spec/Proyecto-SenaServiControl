@@ -251,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4>Recepción</h4></div>
       <nav class="sidebar-nav">
-        <a href="dashboard_recepcionista.php">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="recepcionista_clientes.php">Clientes</a>
         <a href="recepcionista_vehiculos.php"class="active" >Vehículos</a>
         <a href="recepcionista_servicios.php">Servicios</a>
@@ -266,7 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <h2 class="section-title mb-0">Vehículos registrados</h2>
         </div>
         <div class="d-flex flex-wrap gap-2">
-          <a href="dashboard_recepcionista.php" class="btn btn-outline-verde rounded-pill">Volver al panel</a>
+          <a href="../../index.html" class="btn btn-outline-verde rounded-pill">Volver al panel</a>
           <a href="registro_cliente.php" class="btn btn-outline-verde rounded-pill">Registrar cliente</a>
           <a href="registro_recepcionista.php" class="btn btn-verde rounded-pill">Registrar vehículo</a>
         </div>

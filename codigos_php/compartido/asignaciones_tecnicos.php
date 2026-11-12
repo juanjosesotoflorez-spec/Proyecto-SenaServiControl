@@ -165,9 +165,9 @@ while ($row=$historialResult->fetch_assoc()) $historial[]=$row;
 <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Asignación de técnicos</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/module-pages.css?v=20261022"><script src="../js/form-validation.js?v=20261109-confirm" defer></script></head>
 <body class="admin-body module-page module-assignments"><div class="admin-layout"><aside class="admin-sidebar"><div class="sidebar-brand"><h4>Asignaciones</h4></div><nav class="sidebar-nav">
-<?php if($rol==='administrador'): ?><a href="dashboard_admin.php">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
-<?php elseif($rol==='recepcionista'): ?><a href="dashboard_recepcionista.php">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a>
-<?php else: ?><a href="dashboard_tecnico.php">Volver al panel</a><a href="tecnico_servicios.php">Servicios asignados</a><?php endif; ?>
+<?php if($rol==='administrador'): ?><a href="../../index.html">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
+<?php elseif($rol==='recepcionista'): ?><a href="../../index.html">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a>
+<?php else: ?><a href="../../index.html">Volver al panel</a><a href="tecnico_servicios.php">Servicios asignados</a><?php endif; ?>
 <a href="asignaciones_tecnicos.php" class="active">Asignaciones</a><a href="logout.php">Salir</a></nav></aside>
 <main class="admin-content"><h2 class="section-title">Asignaciones y carga de trabajo</h2>
 <p class="texto-gris">La carga refleja servicios activos asignados; no equivale a disponibilidad confirmada.</p>

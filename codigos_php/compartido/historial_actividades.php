@@ -51,9 +51,9 @@ $actividades = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 <title>Historial de actividades</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/module-pages.css?v=20261022"></head>
 <body class="admin-body module-page module-activity"><div class="admin-layout">
 <aside class="admin-sidebar"><div class="sidebar-brand"><h4>Actividad</h4></div><nav class="sidebar-nav">
-<?php if ($rol === 'administrador'): ?><a href="dashboard_admin.php">Volver al panel</a>
-<?php elseif ($rol === 'recepcionista'): ?><a href="dashboard_recepcionista.php">Volver al panel</a>
-<?php else: ?><a href="dashboard_cliente.php">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a><?php endif; ?>
+<?php if ($rol === 'administrador'): ?><a href="../../index.html">Volver al panel</a>
+<?php elseif ($rol === 'recepcionista'): ?><a href="../../index.html">Volver al panel</a>
+<?php else: ?><a href="../../index.html">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a><?php endif; ?>
 <a href="reportes.php">Reportes e indicadores</a><a href="historial_actividades.php" class="active">Historial de actividades</a><a href="logout.php">Salir</a>
 </nav></aside>
 <main class="admin-content"><h2 class="section-title">Historial de actividades</h2>

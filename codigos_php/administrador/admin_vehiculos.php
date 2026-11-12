@@ -56,7 +56,7 @@ $vehiculos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4>Administración</h4></div>
       <nav class="sidebar-nav">
-        <a href="dashboard_admin.php">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="admin_usuarios.php">Usuarios</a>
         <a href="admin_clientes.php">Clientes</a>
         <a href="admin_vehiculos.php" class="active">Vehículos</a>

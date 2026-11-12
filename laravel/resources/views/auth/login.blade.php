@@ -5,11 +5,6 @@
 
 @section('content')
     <div class="auth-content">
-        <section class="auth-copy" aria-label="Bienvenida">
-            <span>Serviteca SENA</span>
-            <h1>Bienvenido</h1>
-            <p>Inicia sesión para consultar tus servicios y hacer seguimiento a tu vehículo.</p>
-        </section>
         <section class="surface login-panel auth-login-panel" aria-labelledby="login-title">
             <div class="auth-logo-card">
                 <img src="../../imagenes/sena_logo_transparente.png" alt="Logo SENA" width="48" height="48">
@@ -28,8 +23,12 @@
                 </div>
                 <button class="btn btn-success w-100" type="submit">Entrar</button>
             </form>
-            <p class="auth-login-link">¿No tienes cuenta? <a href="../../codigos_php/register.php">Regístrate</a></p>
+            <p class="auth-login-link">¿No tienes cuenta? <a href="{{ route('register') }}">Regístrate</a></p>
             <p class="auth-login-link"><a href="../../index.html">Volver a la página principal</a></p>
         </section>
+        <aside class="auth-side-message" aria-label="Serviteca SENA">
+            <span>Serviteca SENA</span>
+            <p>Tu camino sigue con el mejor cuidado.</p>
+        </aside>
     </div>
 @endsection

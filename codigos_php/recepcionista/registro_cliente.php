@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="navbar navbar-light bg-white shadow-sm border-bottom">
       <div class="container-fluid px-4">
         <a class="navbar-brand fw-bold texto-verde" href="dashboard_recepcionista.php">Recepción SENA</a>
-        <a class="btn btn-outline-verde rounded-pill" href="dashboard_recepcionista.php">Volver al panel</a>
+        <a class="btn btn-outline-verde rounded-pill" href="../../index.html">Volver al panel</a>
       </div>
     </nav>
     <main class="flex-grow-1 py-4">

@@ -322,10 +322,10 @@ if ($rol === 'cliente' && $clienteId > 0) {
     <script src="../js/form-validation.js?v=20261109-confirm" defer></script>
 </head><body class="admin-body module-page module-maintenance"><div class="admin-layout">
   <aside class="admin-sidebar"><div class="sidebar-brand"><h4>Mantenimientos</h4></div><nav class="sidebar-nav">
-    <?php if ($rol === 'cliente'): ?><a href="dashboard_cliente.php">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a>
-    <?php elseif ($rol === 'tecnico'): ?><a href="dashboard_tecnico.php">Volver al panel</a><a href="tecnico_servicios.php">Servicios asignados</a>
-    <?php elseif ($rol === 'administrador'): ?><a href="dashboard_admin.php">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
-    <?php else: ?><a href="dashboard_recepcionista.php">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a><?php endif; ?>
+    <?php if ($rol === 'cliente'): ?><a href="../../index.html">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a>
+    <?php elseif ($rol === 'tecnico'): ?><a href="../../index.html">Volver al panel</a><a href="tecnico_servicios.php">Servicios asignados</a>
+    <?php elseif ($rol === 'administrador'): ?><a href="../../index.html">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
+    <?php else: ?><a href="../../index.html">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a><?php endif; ?>
     <a href="mantenimientos.php" class="active">Mantenimientos</a><a href="logout.php">Salir</a>
   </nav></aside>
   <main class="admin-content">

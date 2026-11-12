@@ -4,10 +4,65 @@ namespace Tests\Feature\Api;
 
 use App\Enums\RolUsuario;
 use App\Models\Cliente;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Route;
 
 class ClienteRegistrationTest extends LegacyApiTestCase
 {
+    public function test_web_registration_creates_a_customer_account_and_starts_a_session(): void
+    {
+        $this->get(route('register'))
+            ->assertOk()
+            ->assertSee(route('register.store'), false)
+            ->assertSee('auth-register-panel')
+            ->assertSee('../../index.html', false);
+
+        $response = $this->post(route('register.store'), [
+            'usuario' => 'nuevo-cliente',
+            'correo' => 'nuevo@example.test',
+            'contrasena' => 'clave-segura-123',
+            'contrasena_confirmation' => 'clave-segura-123',
+            'nombre' => 'Ana',
+            'apellido' => 'Lopez',
+            'documento' => 'CC-9001',
+            'telefono' => '3005550011',
+            'direccion' => 'Calle 10',
+        ]);
+
+        $response->assertRedirect(route('dashboard'));
+        $this->assertAuthenticated();
+        $this->assertDatabaseHas('usuario', [
+            'usuario' => 'nuevo-cliente',
+            'correo' => 'nuevo@example.test',
+            'rol' => RolUsuario::Cliente->value,
+            'estado' => 'activo',
+        ]);
+        $this->assertDatabaseHas('cliente', [
+            'documento' => 'CC-9001',
+            'correo' => 'nuevo@example.test',
+        ]);
+        $this->assertTrue(password_verify('clave-segura-123', Usuario::query()->firstOrFail()->contrasena));
+    }
+
+    public function test_web_registration_rejects_mismatched_passwords(): void
+    {
+        $this->from(route('register'))
+            ->post(route('register.store'), [
+                'usuario' => 'nuevo-cliente',
+                'correo' => 'nuevo@example.test',
+                'contrasena' => 'clave-segura-123',
+                'contrasena_confirmation' => 'otra-clave-123',
+                'nombre' => 'Ana',
+                'apellido' => 'Lopez',
+                'documento' => 'CC-9001',
+            ])
+            ->assertRedirect(route('register'))
+            ->assertSessionHasErrors('contrasena');
+
+        $this->assertDatabaseCount('usuario', 0);
+        $this->assertDatabaseCount('cliente', 0);
+    }
+
     public function test_customer_registration_creates_a_unique_user_and_customer_record(): void
     {
         $this->postJson('/api/register', [

@@ -199,9 +199,9 @@ if ($rol === 'recepcionista') {
 <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Entrega de vehículos</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/module-pages.css?v=20261022"><script src="../js/form-validation.js?v=20261109-confirm" defer></script></head>
 <body class="admin-body module-page module-deliveries"><div class="admin-layout"><aside class="admin-sidebar"><div class="sidebar-brand"><h4>Entregas</h4></div><nav class="sidebar-nav">
-<?php if ($rol==='cliente'): ?><a href="dashboard_cliente.php">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a>
-<?php elseif ($rol==='administrador'): ?><a href="dashboard_admin.php">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
-<?php else: ?><a href="dashboard_recepcionista.php">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a><?php endif; ?>
+<?php if ($rol==='cliente'): ?><a href="../../index.html">Volver al panel</a><a href="cliente_servicios.php">Mis servicios</a>
+<?php elseif ($rol==='administrador'): ?><a href="../../index.html">Volver al panel</a><a href="admin_servicios.php">Servicios</a>
+<?php else: ?><a href="../../index.html">Volver al panel</a><a href="recepcionista_servicios.php">Servicios</a><?php endif; ?>
 <a href="entregas.php" class="active">Entregas</a><a href="logout.php">Salir</a></nav></aside>
 <main class="admin-content"><h2 class="section-title">Entrega de vehículos</h2>
 <p class="texto-gris">Finalización técnica, registro administrativo y confirmación del cliente son etapas separadas.</p>

@@ -89,7 +89,7 @@ while ($row = $result->fetch_assoc()) {
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4>Administración</h4></div>
       <nav class="sidebar-nav">
-        <a href="dashboard_admin.php">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="admin_usuarios.php">Usuarios</a>
         <a href="admin_vehiculos.php">Vehículos</a>
         <a href="admin_servicios.php" class="active">Servicios</a>

@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && is_string($vehiculoSeleccionado) &&
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4>Cliente</h4></div>
       <nav class="sidebar-nav">
-        <a href="dashboard_cliente.php">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="cliente_vehiculos.php">Mis vehículos</a>
         <a href="cliente_solicitud_servicio.php" class="active">Solicitar servicio</a>
         <a href="cliente_servicios.php">Mis servicios</a>
@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && is_string($vehiculoSeleccionado) &&
             </div>
             <div class="col-12 d-flex flex-wrap gap-2">
               <button type="submit" class="btn btn-verde rounded-pill">Enviar solicitud</button>
-              <a href="dashboard_cliente.php" class="btn btn-outline-verde rounded-pill">Volver al panel</a>
+              <a href="../../index.html" class="btn btn-outline-verde rounded-pill">Volver al panel</a>
             </div>
           </form>
         </section>

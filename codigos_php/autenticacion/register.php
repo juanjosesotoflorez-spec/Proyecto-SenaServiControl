@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <button type="submit" class="btn btn-verde w-100">Registrarse</button>
             </div>
             <div class="col-12 col-sm-6">
-              <a href="../index.html" class="btn btn-outline-verde w-100">Volver al inicio</a>
+              <a href="../../index.html" class="btn btn-outline-verde w-100">Volver al inicio</a>
             </div>
           </form>
           <p class="mt-3 text-center mb-0">

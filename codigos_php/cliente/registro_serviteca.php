@@ -241,7 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   <h2 class="fw-bold mb-3">Registra tu vehículo en pocos pasos</h2>
                   <p class="text-muted mb-4">Completa el formulario para que tu auto quede asociado a tu cuenta y puedas seguir sus servicios con mayor organización.</p>
                   <div class="d-flex flex-wrap gap-2">
-                    <a href="dashboard_cliente.php" class="btn btn-outline-verde rounded-pill">Volver al panel</a>
+                    <a href="../../index.html" class="btn btn-outline-verde rounded-pill">Volver al panel</a>
                     <a href="cliente_vehiculos.php" class="btn btn-verde rounded-pill">Ver mis vehículos</a>
                   </div>
                 </div>

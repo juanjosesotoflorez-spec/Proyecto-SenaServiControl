@@ -216,7 +216,7 @@ while ($row = $result->fetch_assoc()) {
     <aside class="admin-sidebar">
       <div class="sidebar-brand"><h4><?= $esAdministrador ? 'Administración' : ($esTecnico ? 'Técnico' : 'Recepción') ?></h4></div>
       <nav class="sidebar-nav">
-        <a href="<?= htmlspecialchars($panel) ?>">Volver al panel</a>
+        <a href="../../index.html">Volver al panel</a>
         <a href="solicitudes_servicio.php" class="active">Solicitudes de servicio</a>
         <a href="<?= $esAdministrador ? 'admin_servicios.php' : ($esTecnico ? 'tecnico_servicios.php' : 'recepcionista_servicios.php') ?>">
           <?= $esTecnico ? 'Servicios del taller' : 'Servicios' ?>
@@ -269,7 +269,7 @@ while ($row = $result->fetch_assoc()) {
           </table>
         </div>
       </section>
-      <a href="<?= htmlspecialchars($panel) ?>" class="btn btn-outline-verde rounded-pill mt-3">Volver al panel</a>
+      <a href="../../index.html" class="btn btn-outline-verde rounded-pill mt-3">Volver al panel</a>
     </main>
   </div>
 </body>

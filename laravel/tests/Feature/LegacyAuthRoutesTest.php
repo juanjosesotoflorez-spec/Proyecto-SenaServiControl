@@ -16,6 +16,12 @@ class LegacyAuthRoutesTest extends TestCase
         $this->get(route('login'))->assertOk();
     }
 
+    public function test_laravel_root_redirects_to_the_project_landing_page(): void
+    {
+        $this->get('/')
+            ->assertRedirect('../../index.html');
+    }
+
     public function test_dashboard_redirects_guests_to_login(): void
     {
         $this->get(route('dashboard'))->assertRedirect(route('login'));
