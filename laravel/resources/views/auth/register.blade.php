@@ -11,44 +11,53 @@
             </div>
             <h2 id="register-title">Crear cuenta</h2>
             <p class="auth-login-intro">Completa tus datos para registrarte como cliente.</p>
-            <form method="POST" action="{{ route('register.store') }}">
+            <form method="POST" action="{{ route('register.store') }}" data-validate novalidate>
                 @csrf
                 <div class="row g-2">
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="usuario">Nombre de usuario</label>
-                        <input class="form-control" id="usuario" name="usuario" type="text" value="{{ old('usuario') }}" minlength="3" maxlength="50" autocomplete="username" required autofocus>
+                        <input class="form-control @error('usuario') is-invalid @enderror" id="usuario" name="usuario" type="text" value="{{ old('usuario') }}" minlength="3" maxlength="50" autocomplete="username" required autofocus>
+                        <div class="invalid-feedback @error('usuario') d-block @enderror" data-validation-feedback>@error('usuario'){{ $message }}@enderror</div>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="correo">Correo</label>
-                        <input class="form-control" id="correo" name="correo" type="email" value="{{ old('correo') }}" maxlength="100" autocomplete="email" required>
+                        <input class="form-control @error('correo') is-invalid @enderror" id="correo" name="correo" type="email" value="{{ old('correo') }}" maxlength="100" autocomplete="email" required aria-describedby="registro-correo-error">
+                        <div class="invalid-feedback @error('correo') d-block @enderror" id="registro-correo-error" data-validation-feedback>@error('correo'){{ $message }}@enderror</div>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="nombre">Nombre</label>
-                        <input class="form-control" id="nombre" name="nombre" type="text" value="{{ old('nombre') }}" maxlength="50" autocomplete="given-name" required>
+                        <input class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" type="text" value="{{ old('nombre') }}" minlength="2" maxlength="50" autocomplete="given-name" data-letters-only required aria-describedby="registro-nombre-error">
+                        <div class="invalid-feedback @error('nombre') d-block @enderror" id="registro-nombre-error" data-validation-feedback>@error('nombre'){{ $message }}@enderror</div>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="apellido">Apellido</label>
-                        <input class="form-control" id="apellido" name="apellido" type="text" value="{{ old('apellido') }}" maxlength="50" autocomplete="family-name" required>
+                        <input class="form-control @error('apellido') is-invalid @enderror" id="apellido" name="apellido" type="text" value="{{ old('apellido') }}" minlength="2" maxlength="50" autocomplete="family-name" data-letters-only required aria-describedby="registro-apellido-error">
+                        <div class="invalid-feedback @error('apellido') d-block @enderror" id="registro-apellido-error" data-validation-feedback>@error('apellido'){{ $message }}@enderror</div>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="documento">Documento</label>
-                        <input class="form-control" id="documento" name="documento" type="text" value="{{ old('documento') }}" maxlength="20" autocomplete="off" required>
+                        <input class="form-control @error('documento') is-invalid @enderror" id="documento" name="documento" type="text" inputmode="numeric" value="{{ old('documento') }}" minlength="6" maxlength="12" autocomplete="off" data-digits-only required aria-describedby="registro-documento-error">
+                        <div class="invalid-feedback @error('documento') d-block @enderror" id="registro-documento-error" data-validation-feedback>@error('documento'){{ $message }}@enderror</div>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="telefono">Teléfono</label>
-                        <input class="form-control" id="telefono" name="telefono" type="tel" value="{{ old('telefono') }}" maxlength="20" autocomplete="tel">
+                        <input class="form-control @error('telefono') is-invalid @enderror" id="telefono" name="telefono" type="tel" inputmode="numeric" value="{{ old('telefono') }}" minlength="10" maxlength="10" autocomplete="tel" data-digits-only aria-describedby="registro-telefono-error">
+                        <div class="invalid-feedback @error('telefono') d-block @enderror" id="registro-telefono-error" data-validation-feedback>@error('telefono'){{ $message }}@enderror</div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 form-field">
                         <label class="form-label" for="direccion">Dirección</label>
-                        <input class="form-control" id="direccion" name="direccion" type="text" value="{{ old('direccion') }}" maxlength="100" autocomplete="street-address">
+                        <input class="form-control @error('direccion') is-invalid @enderror" id="direccion" name="direccion" type="text" value="{{ old('direccion') }}" minlength="5" maxlength="100" autocomplete="street-address" aria-describedby="registro-direccion-error">
+                        <div class="invalid-feedback @error('direccion') d-block @enderror" id="registro-direccion-error" data-validation-feedback>@error('direccion'){{ $message }}@enderror</div>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="contrasena">Contraseña</label>
-                        <input class="form-control" id="contrasena" name="contrasena" type="password" minlength="8" maxlength="255" autocomplete="new-password" required>
+                        <input class="form-control @error('contrasena') is-invalid @enderror" id="contrasena" name="contrasena" type="password" minlength="8" maxlength="255" autocomplete="new-password" required>
+                        <div class="invalid-feedback @error('contrasena') d-block @enderror" data-validation-feedback>@error('contrasena'){{ $message }}@enderror</div>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="contrasena_confirmation">Confirmar contraseña</label>
                         <input class="form-control" id="contrasena_confirmation" name="contrasena_confirmation" type="password" minlength="8" maxlength="255" autocomplete="new-password" required>
+                        <div class="invalid-feedback" data-validation-feedback></div>
                     </div>
                     <div class="col-12">
                         <button class="btn btn-success w-100" type="submit">Registrarse</button>

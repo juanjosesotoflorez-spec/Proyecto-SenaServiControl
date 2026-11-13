@@ -36,10 +36,14 @@ class ReporteController extends Controller
     private function generatePdf(bool $download): Response
     {
         $usuario = request()->user();
-        abort_unless($usuario instanceof Usuario && $usuario->rol === RolUsuario::Administrador, 403);
+        abort_unless(
+            $usuario instanceof Usuario
+                && in_array($usuario->rol, [RolUsuario::Administrador, RolUsuario::Recepcionista], true),
+            403
+        );
 
         $servicios = Servicio::query()
-            ->with(['vehiculo.cliente', 'tecnico'])
+            ->with('vehiculo.cliente')
             ->orderByDesc('fecha_ingreso')
             ->get();
 

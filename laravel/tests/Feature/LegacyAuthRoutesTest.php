@@ -22,6 +22,15 @@ class LegacyAuthRoutesTest extends TestCase
             ->assertRedirect('../../index.html');
     }
 
+    public function test_landing_page_auth_links_are_relative_to_the_project_directory(): void
+    {
+        $landingPage = file_get_contents(base_path('../index.html'));
+
+        self::assertIsString($landingPage);
+        self::assertStringContainsString('href="laravel/public/login"', $landingPage);
+        self::assertStringContainsString('href="laravel/public/register"', $landingPage);
+    }
+
     public function test_dashboard_redirects_guests_to_login(): void
     {
         $this->get(route('dashboard'))->assertRedirect(route('login'));
@@ -58,13 +67,13 @@ class LegacyAuthRoutesTest extends TestCase
             ->assertSee('build/assets/app-', false);
     }
 
-    public function test_only_administrators_can_generate_pdf_reports(): void
+    public function test_customers_cannot_generate_staff_pdf_reports(): void
     {
         $usuario = new Usuario;
         $usuario->forceFill([
             'id_usuario' => 1,
-            'usuario' => 'Recepcionista',
-            'rol' => RolUsuario::Recepcionista,
+            'usuario' => 'Cliente',
+            'rol' => RolUsuario::Cliente,
             'estado' => EstadoUsuario::Activo,
         ]);
 

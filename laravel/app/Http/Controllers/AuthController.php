@@ -12,6 +12,7 @@ use App\Services\AuthenticatesUsuario;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -53,7 +54,7 @@ class AuthController extends Controller
             $usuario = Usuario::query()->create([
                 'usuario' => $data['usuario'],
                 'correo' => $data['correo'],
-                'contrasena' => $data['contrasena'],
+                'contrasena' => Hash::make($data['contrasena']),
                 'rol' => RolUsuario::Cliente,
                 'estado' => EstadoUsuario::Activo,
             ]);

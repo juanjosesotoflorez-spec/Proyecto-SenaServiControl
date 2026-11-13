@@ -1,6 +1,13 @@
 :root {
-  --verde-sena: #00af00;
-  --verde-sena-dark: #008800;
+  --verde-sena: #39A900;
+  --verde-sena-dark: var(--verde-sena);
+  --bs-success: #39A900;
+  --bs-success-rgb: 57, 169, 0;
+  --bs-success-text-emphasis: #39A900;
+  --bs-success-bg-subtle: #edf7e7;
+  --bs-success-border-subtle: #c9e6b5;
+  --bs-link-color: #39A900;
+  --bs-link-hover-color: #39A900;
   --blanco: #ffffff;
   --gris-claro: #e6e6e6;
   --gris-texto: #999999;
@@ -8,6 +15,26 @@
   --negro: #000000;
   --radio: 14px;
   --sombra: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.btn-success {
+  --bs-btn-bg: var(--verde-sena);
+  --bs-btn-border-color: var(--verde-sena);
+  --bs-btn-hover-bg: var(--verde-sena);
+  --bs-btn-hover-border-color: var(--verde-sena);
+  --bs-btn-active-bg: var(--verde-sena);
+  --bs-btn-active-border-color: var(--verde-sena);
+}
+
+.btn-outline-success {
+  --bs-btn-color: var(--verde-sena);
+  --bs-btn-border-color: var(--verde-sena);
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: var(--verde-sena);
+  --bs-btn-hover-border-color: var(--verde-sena);
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: var(--verde-sena);
+  --bs-btn-active-border-color: var(--verde-sena);
 }
 
 * {
@@ -97,7 +124,7 @@ section {
   position: relative;
   min-height: 500px;
   overflow: hidden;
-  background: #0f3a13;
+  background: var(--verde-sena);
 }
 
 .hero-section .carousel-item img {
@@ -197,7 +224,7 @@ section {
 .form-control:focus,
 .form-select:focus {
   border-color: var(--verde-sena);
-  box-shadow: 0 0 0 0.2rem rgba(0, 175, 0, 0.12);
+  box-shadow: 0 0 0 0.2rem rgba(57, 169, 0, 0.16);
 }
 
 .form-control:user-invalid,
@@ -287,7 +314,7 @@ section {
 
 .navbar .nav-link.active,
 .navbar .nav-link:hover {
-  background: rgba(0, 175, 0, 0.14);
+  background: rgba(57, 169, 0, 0.14);
   color: var(--verde-sena-dark) !important;
 }
 
@@ -407,7 +434,7 @@ section {
   margin-bottom: 8px;
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(0, 175, 0, 0.12);
+  background: rgba(57, 169, 0, 0.12);
   color: var(--verde-sena-dark);
   font-size: 0.8rem;
   font-weight: 700;
@@ -589,7 +616,7 @@ section {
 
 .role-hero p {
   margin-bottom: 0;
-  color: #3c4f3c;
+  color: #343834;
 }
 
 .role-actions {
@@ -608,8 +635,8 @@ section {
 }
 
 .navbar {
-  background: linear-gradient(135deg, #1d7a1d 0%, #2fa64d 100%) !important;
-  border-bottom: 2px solid #0f5a0f !important;
+  background: var(--verde-sena) !important;
+  border-bottom: 2px solid var(--verde-sena) !important;
 }
 
 .navbar-brand,
@@ -627,7 +654,7 @@ section {
 .profile-avatar {
   width: 58px;
   height: 58px;
-  background: linear-gradient(135deg, #2fa64d 0%, #1d7a1d 100%);
+  background: var(--verde-sena);
   color: #ffffff;
   font-size: 1.35rem;
   font-weight: 700;
@@ -815,7 +842,7 @@ section {
   margin-bottom: 10px;
   padding: 7px 13px;
   border-radius: 999px;
-  background: rgba(0, 175, 0, 0.82);
+  background: rgba(57, 169, 0, 0.82);
   color: var(--blanco);
   font-size: 0.78rem;
   font-weight: 800;
@@ -1241,7 +1268,7 @@ section {
 .dashboard-welcome {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(0, 175, 0, 0.22);
+  border: 1px solid rgba(57, 169, 0, 0.22);
   border-radius: 18px;
   background: var(--blanco);
   box-shadow: var(--sombra);
@@ -1249,7 +1276,7 @@ section {
 
 .dashboard-welcome-main {
   padding: clamp(24px, 4vw, 42px);
-  background: linear-gradient(120deg, rgba(0, 175, 0, 0.1), var(--blanco) 74%);
+  background: linear-gradient(120deg, rgba(57, 169, 0, 0.1), var(--blanco) 74%);
 }
 
 .dashboard-eyebrow {
@@ -1522,8 +1549,8 @@ body.dashboard-sidebar-collapsed .dashboard-nav-link {
 
 .sidebar-nav a.active,
 .sidebar-nav a:hover {
-  border-color: rgba(0, 175, 0, 0.2);
-  background: rgba(0, 175, 0, 0.08);
+  border-color: rgba(57, 169, 0, 0.2);
+  background: rgba(57, 169, 0, 0.08);
   color: var(--verde-sena-dark);
 }
 

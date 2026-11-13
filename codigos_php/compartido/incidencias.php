@@ -163,7 +163,7 @@ if ($rol === 'tecnico') {
 ?>
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Incidencias</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/module-pages.css?v=20261022"><script src="../js/form-validation.js?v=20261109-confirm" defer></script></head>
+<title>Incidencias</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../css/style.css?v=20261113-brand-green"><link rel="stylesheet" href="../css/module-pages.css?v=20261113-brand-green"><script src="../js/form-validation.js?v=20261109-confirm" defer></script></head>
 <body class="admin-body module-page module-incidents"><div class="admin-layout">
 <aside class="admin-sidebar"><div class="sidebar-brand"><h4>Incidencias</h4></div><nav class="sidebar-nav">
 <?php if ($rol === 'administrador'): ?><a href="../../index.html">Volver al panel</a>

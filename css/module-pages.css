@@ -31,7 +31,7 @@
 
 .module-page .sidebar-brand h4 {
   margin: 0;
-  color: #008800;
+  color: #39A900;
   font-size: 0.98rem;
   font-weight: 750;
 }
@@ -56,9 +56,9 @@
 
 .module-page .sidebar-nav a.active,
 .module-page .sidebar-nav a:hover {
-  border-color: rgba(0, 175, 0, 0.22);
-  background: rgba(0, 175, 0, 0.09);
-  color: #007c00;
+  border-color: rgba(57, 169, 0, 0.22);
+  background: rgba(57, 169, 0, 0.09);
+  color: #39A900;
 }
 
 .module-page .admin-content {
@@ -83,7 +83,7 @@
 .module-page .admin-content > .admin-header h2.section-title {
   margin: 0 0 22px;
   padding-left: 14px;
-  border-left: 5px solid var(--module-accent, #00af00);
+  border-left: 5px solid var(--module-accent, #39A900);
   color: #171917;
   font-size: clamp(1.55rem, 2.4vw, 2.05rem);
   font-weight: 750;
@@ -115,13 +115,13 @@
 
 .module-page .form-control:focus,
 .module-page .form-select:focus {
-  border-color: var(--module-accent, #00af00);
-  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--module-accent, #00af00) 16%, transparent);
+  border-color: var(--module-accent, #39A900);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--module-accent, #39A900) 16%, transparent);
 }
 
 .module-admin-clients,
 .module-reception-clients {
-  --module-accent: #00af00;
+  --module-accent: #39A900;
 }
 
 .module-admin-clients .admin-content::before {
@@ -135,7 +135,7 @@
 .module-admin-vehicles,
 .module-reception-vehicles,
 .module-customer-vehicles {
-  --module-accent: #16834a;
+  --module-accent: #39A900;
 }
 
 .module-admin-vehicles .admin-content::before {
@@ -153,7 +153,7 @@
 .module-admin-services,
 .module-reception-services,
 .module-customer-services {
-  --module-accent: #397a46;
+  --module-accent: #39A900;
 }
 
 .module-admin-services .admin-content::before {
@@ -169,7 +169,7 @@
 }
 
 .module-users {
-  --module-accent: #006f3c;
+  --module-accent: #39A900;
 }
 
 .module-users .admin-content::before {
@@ -177,7 +177,7 @@
 }
 
 .module-parts {
-  --module-accent: #66823c;
+  --module-accent: #39A900;
 }
 
 .module-parts .admin-content::before {
@@ -185,7 +185,7 @@
 }
 
 .module-assignments {
-  --module-accent: #4c7a32;
+  --module-accent: #39A900;
 }
 
 .module-assignments .admin-content::before {
@@ -193,7 +193,7 @@
 }
 
 .module-deliveries {
-  --module-accent: #00866a;
+  --module-accent: #39A900;
 }
 
 .module-deliveries .admin-content::before {
@@ -202,7 +202,7 @@
 
 .module-history,
 .module-activity {
-  --module-accent: #727d72;
+  --module-accent: #39A900;
 }
 
 .module-history .admin-content::before {
@@ -214,7 +214,7 @@
 }
 
 .module-reports {
-  --module-accent: #47734c;
+  --module-accent: #39A900;
 }
 
 .module-reports .admin-content::before {
@@ -222,7 +222,7 @@
 }
 
 .module-incidents {
-  --module-accent: #7b6b34;
+  --module-accent: #39A900;
 }
 
 .module-incidents .admin-content::before {
@@ -230,7 +230,7 @@
 }
 
 .module-notifications {
-  --module-accent: #2f806b;
+  --module-accent: #39A900;
 }
 
 .module-notifications .admin-content::before {
@@ -238,7 +238,7 @@
 }
 
 .module-maintenance {
-  --module-accent: #50823e;
+  --module-accent: #39A900;
 }
 
 .module-maintenance .admin-content::before {
@@ -249,7 +249,7 @@
 .module-repairs-tech,
 .module-workshop-services,
 .module-workshop-tracking {
-  --module-accent: #006b3c;
+  --module-accent: #39A900;
 }
 
 .module-repairs .admin-content::before,
@@ -269,7 +269,7 @@
 .module-client-registration,
 .module-vehicle-registration,
 .module-customer-vehicle-registration {
-  --module-accent: #00af00;
+  --module-accent: #39A900;
 }
 
 .module-service-registration .admin-content::before {
@@ -289,7 +289,7 @@
 }
 
 .module-profile {
-  --module-accent: #008800;
+  --module-accent: #39A900;
 }
 
 .module-profile main::before {

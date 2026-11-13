@@ -11,6 +11,7 @@
     <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
     @auth
         @php($rol = auth()->user()->rol->value)
+        @php($clientePerfil = $rol === 'cliente' ? auth()->user()->cliente : null)
         <div class="app-shell">
             <aside class="sidebar d-none d-lg-flex" aria-label="Navegación principal">
                 <a class="brand" href="{{ route('dashboard') }}">
@@ -19,7 +20,18 @@
                 </a>
                 <p class="sidebar-label">Espacio de trabajo</p>
                 @include('layouts.partials.navigation')
-                <div class="sidebar-footer"><span class="sidebar-footer-dot"></span>Operación activa</div>
+                @if ($clientePerfil)
+                    <a class="sidebar-profile" href="{{ route('perfil.edit') }}">
+                        <img class="sidebar-profile-photo" src="{{ route('perfil.foto') }}" alt="">
+                        <span class="sidebar-profile-copy">
+                            <strong>Mi perfil</strong>
+                            <small><span class="sidebar-footer-dot"></span>Operación activa</small>
+                        </span>
+                        <i class="fa-solid fa-chevron-right sidebar-profile-chevron" aria-hidden="true"></i>
+                    </a>
+                @else
+                    <div class="sidebar-footer"><span class="sidebar-footer-dot"></span>Operación activa</div>
+                @endif
             </aside>
             <div class="offcanvas offcanvas-start mobile-sidebar d-lg-none" tabindex="-1" id="mobile-navigation" aria-labelledby="mobile-navigation-title">
                 <div class="offcanvas-header">
@@ -52,12 +64,19 @@
                     </form>
                     <div class="dropdown profile-menu">
                         <button class="btn profile-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Abrir menú de perfil">
-                            <span class="user-avatar" aria-hidden="true"><i class="fa-regular fa-user"></i></span>
+                            @if ($clientePerfil)
+                                <img class="user-avatar user-avatar-image" src="{{ route('perfil.foto') }}" alt="">
+                            @else
+                                <span class="user-avatar" aria-hidden="true"><i class="fa-regular fa-user"></i></span>
+                            @endif
                             <span class="profile-name">{{ auth()->user()->usuario }}</span>
                             <i class="fa-solid fa-chevron-down profile-chevron" aria-hidden="true"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end profile-dropdown">
                             <li><span class="dropdown-item-text"><strong>{{ auth()->user()->usuario }}</strong><small>{{ ucfirst($rol) }}</small></span></li>
+                            @if ($clientePerfil)
+                                <li><a class="dropdown-item" href="{{ route('perfil.edit') }}"><i class="fa-regular fa-id-card me-2" aria-hidden="true"></i>Mi perfil</a></li>
+                            @endif
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
@@ -103,5 +122,131 @@
     @else
         </div>
     @endauth
+        <script>
+            (() => {
+                const fields = (form) => Array.from(form.querySelectorAll('input, select, textarea'))
+                    .filter((field) => !field.disabled && !['hidden', 'submit', 'button', 'reset', 'search'].includes(field.type));
+
+                const feedbackFor = (field) => field.closest('.form-field')?.querySelector('[data-validation-feedback]');
+
+                const validationMessage = (field) => {
+                    const value = field.value;
+                    const label = field.labels?.[0]?.textContent.trim().toLowerCase() || 'este campo';
+
+                    if (field.required && value.trim() === '') return `El campo ${label} es obligatorio.`;
+                    if (value === '') return '';
+
+                    const minimumLength = field.getAttribute('minlength');
+                    const maximumLength = field.getAttribute('maxlength');
+                    if (minimumLength !== null && value.length < Number(minimumLength)) {
+                        return Number(minimumLength) === Number(maximumLength)
+                            ? `Debe tener exactamente ${minimumLength} caracteres.`
+                            : `Debe tener al menos ${minimumLength} caracteres.`;
+                    }
+                    if (maximumLength !== null && value.length > Number(maximumLength)) return `No puede superar ${maximumLength} caracteres.`;
+                    if (field.matches('[data-letters-only]') && !/^[\p{L} ]+$/u.test(value)) {
+                        return 'Solo se permiten letras, tildes, ñ y espacios.';
+                    }
+                    if (field.matches('[data-digits-only]') && !/^[0-9]+$/.test(value)) {
+                        return 'Solo se permiten números de 0 a 9.';
+                    }
+                    if (field.matches('[data-uppercase]') && !/^[A-Z0-9]{6}$/.test(value)) {
+                        return 'La placa debe contener exactamente 6 letras mayúsculas o números.';
+                    }
+                    if (field.type === 'email' && field.validity.typeMismatch) return 'Ingresa un correo electrónico válido.';
+                    if (field.validity.patternMismatch) return field.title || 'El formato ingresado no es válido.';
+                    if (field.type === 'date' && field.validity.rangeUnderflow) return 'La fecha no puede ser anterior a la fecha indicada.';
+                    if (field.type === 'date' && field.validity.rangeOverflow) return 'La fecha supera el límite permitido.';
+
+                    const numericValue = Number(value);
+                    const minimum = field.getAttribute('min');
+                    const maximum = field.getAttribute('max');
+                    if (field.dataset.digitsOnly !== undefined && !/^[0-9]+$/.test(value)) return 'Ingresa solo números, sin puntos ni espacios.';
+                    if (minimum !== null && Number.isFinite(numericValue) && numericValue < Number(minimum)) {
+                        return `El valor mínimo permitido es ${minimum}.`;
+                    }
+                    if (maximum !== null && Number.isFinite(numericValue) && numericValue > Number(maximum)) {
+                        return `El valor máximo permitido es ${maximum}.`;
+                    }
+                    if (field.validity.tooShort) return `Debe tener al menos ${field.minLength} caracteres.`;
+                    if (field.name === 'contrasena_confirmation') {
+                        const password = field.form.elements.namedItem('contrasena');
+                        if (password && value !== password.value) return 'La confirmación de contraseña no coincide.';
+                    }
+
+                    return '';
+                };
+
+                const validateField = (field) => {
+                    if (!field) return true;
+
+                    const feedback = feedbackFor(field);
+                    if (!feedback) return true;
+
+                    if (field.dataset.serverInvalid === 'true' && field.value === field.dataset.initialValue) {
+                        feedback.textContent = field.dataset.serverErrorMessage;
+                        feedback.classList.add('d-block');
+                        field.classList.add('is-invalid');
+                        field.setAttribute('aria-invalid', 'true');
+                        return false;
+                    }
+
+                    const message = validationMessage(field);
+                    feedback.textContent = message;
+                    feedback.classList.toggle('d-block', message !== '');
+                    field.classList.toggle('is-invalid', message !== '');
+                    field.setAttribute('aria-invalid', message !== '' ? 'true' : 'false');
+                    return message === '';
+                };
+
+                document.querySelectorAll('form[data-validate]').forEach((form) => {
+                    const formFields = fields(form);
+                    formFields.forEach((field) => {
+                        if (field.matches('[data-uppercase]')) field.value = field.value.toUpperCase();
+                        const feedback = feedbackFor(field);
+                        field.dataset.initialValue = field.value;
+                        if (feedback?.textContent.trim()) {
+                            field.dataset.serverInvalid = 'true';
+                            field.dataset.serverErrorMessage = feedback.textContent.trim();
+                            field.classList.add('is-invalid');
+                            field.setAttribute('aria-invalid', 'true');
+                        }
+
+                        field.addEventListener('input', () => {
+                            if (field.matches('[data-uppercase]')) {
+                                field.value = field.value.toUpperCase();
+                            }
+
+                            if (field.name === 'fecha_ingreso') {
+                                const deliveryDate = form.elements.namedItem('fecha_entrega_estimada');
+                                if (deliveryDate) deliveryDate.min = field.value;
+                            }
+
+                            validateField(field);
+                            if (field.name === 'contrasena') {
+                                validateField(form.elements.namedItem('contrasena_confirmation'));
+                            }
+                        });
+                        field.addEventListener('blur', () => {
+                            validateField(field);
+                        });
+                        field.addEventListener('change', () => {
+                            validateField(field);
+                        });
+                    });
+
+                    form.addEventListener('submit', (event) => {
+                        let valid = true;
+                        formFields.forEach((field) => {
+                            if (!validateField(field)) valid = false;
+                        });
+                        if (!valid) {
+                            event.preventDefault();
+                            form.querySelector('.is-invalid')?.focus();
+                        }
+                    });
+                });
+            })();
+        </script>
 </body>
 </html>

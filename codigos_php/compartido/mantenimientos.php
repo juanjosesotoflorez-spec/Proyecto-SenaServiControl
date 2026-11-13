@@ -317,8 +317,8 @@ if ($rol === 'cliente' && $clienteId > 0) {
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mantenimientos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/module-pages.css?v=20261022">
+  <link rel="stylesheet" href="../css/style.css?v=20261113-brand-green">
+  <link rel="stylesheet" href="../css/module-pages.css?v=20261113-brand-green">
     <script src="../js/form-validation.js?v=20261109-confirm" defer></script>
 </head><body class="admin-body module-page module-maintenance"><div class="admin-layout">
   <aside class="admin-sidebar"><div class="sidebar-brand"><h4>Mantenimientos</h4></div><nav class="sidebar-nav">

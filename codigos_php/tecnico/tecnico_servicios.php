@@ -56,8 +56,8 @@ if ($tecnico) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Servicios activos del taller</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/module-pages.css?v=20261022">
+  <link rel="stylesheet" href="../css/style.css?v=20261113-brand-green">
+  <link rel="stylesheet" href="../css/module-pages.css?v=20261113-brand-green">
 </head>
 <body class="admin-body module-page module-workshop-services">
   <div class="admin-layout">

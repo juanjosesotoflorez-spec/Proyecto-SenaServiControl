@@ -48,7 +48,7 @@ $actividades = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Historial de actividades</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/module-pages.css?v=20261022"></head>
+<title>Historial de actividades</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../css/style.css?v=20261113-brand-green"><link rel="stylesheet" href="../css/module-pages.css?v=20261113-brand-green"></head>
 <body class="admin-body module-page module-activity"><div class="admin-layout">
 <aside class="admin-sidebar"><div class="sidebar-brand"><h4>Actividad</h4></div><nav class="sidebar-nav">
 <?php if ($rol === 'administrador'): ?><a href="../../index.html">Volver al panel</a>

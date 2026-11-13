@@ -11,12 +11,10 @@
             <p>Consulta los ingresos, responsables y estado de cada servicio.</p>
         </div>
     </div>
-    @if (auth()->user()->rol->value === 'administrador')
-        <div class="report-actions d-flex flex-wrap gap-2">
-            <a class="btn btn-success" href="{{ route('reportes.pdf') }}">Descargar reporte PDF</a>
-            <a class="btn btn-outline-secondary" href="{{ route('reportes.pdf.print') }}" target="_blank" rel="noopener noreferrer">Imprimir reporte PDF</a>
-        </div>
-    @endif
+    <div class="report-actions d-flex flex-wrap gap-2 mb-3">
+        <a class="btn btn-success" href="{{ route('reportes.pdf') }}">Descargar reporte PDF</a>
+        <a class="btn btn-outline-secondary" href="{{ route('reportes.pdf.print') }}" target="_blank" rel="noopener noreferrer">Imprimir reporte PDF</a>
+    </div>
     <div class="surface table-panel table-responsive">
         <table class="table table-striped">
             <thead><tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Vehículo</th><th>Cliente</th><th>Técnico</th><th>Estado</th><th>Costo</th></tr></thead>

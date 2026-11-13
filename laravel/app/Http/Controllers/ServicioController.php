@@ -33,7 +33,12 @@ class ServicioController extends Controller
         $termino = trim((string) request()->query('q', ''));
         abort_unless($usuario instanceof Usuario, 403);
 
-        $servicios = Servicio::query()->with(['vehiculo.cliente', 'tecnico', 'asignacionActual']);
+        $servicios = Servicio::query()->with([
+            'vehiculo.cliente',
+            'tecnico',
+            'asignacionActual',
+            'entregas.recepcionista',
+        ]);
 
         if ($usuario->rol === RolUsuario::Cliente) {
             $cliente = Cliente::query()->where('id_usuario', $usuario->getKey())->firstOrFail();
@@ -78,7 +83,48 @@ class ServicioController extends Controller
             'tecnicos' => $usuario->rol === RolUsuario::Recepcionista
                 ? Tecnico::query()->orderBy('apellido')->orderBy('nombre')->get()
                 : collect(),
+            'recepcionistas' => $usuario->rol === RolUsuario::Administrador
+                ? Recepcionista::query()->orderBy('apellido')->orderBy('nombre')->get()
+                : collect(),
         ]);
+    }
+
+    public function show(Servicio $servicio): View
+    {
+        $usuario = request()->user();
+        $mostrarHistorialCliente = false;
+        abort_unless($usuario instanceof Usuario, 403);
+
+        if ($usuario->rol === RolUsuario::Cliente) {
+            $cliente = Cliente::query()->where('id_usuario', $usuario->getKey())->firstOrFail();
+            abort_unless((int) $servicio->vehiculo()->value('id_cliente') === (int) $cliente->getKey(), 403);
+            $mostrarHistorialCliente = true;
+        } elseif ($usuario->rol === RolUsuario::Tecnico) {
+            $tecnico = Tecnico::query()->where('id_usuario', $usuario->getKey())->firstOrFail();
+            abort_unless((int) $servicio->id_tecnico === (int) $tecnico->getKey(), 403);
+        } else {
+            abort_unless(in_array($usuario->rol, [RolUsuario::Administrador, RolUsuario::Recepcionista], true), 403);
+            $mostrarHistorialCliente = true;
+        }
+
+        $servicio->load([
+            'vehiculo.cliente',
+            'tecnico',
+            'seguimientos' => fn ($query) => $query->with('tecnico')->orderByDesc('fecha_hora'),
+            'mantenimientos',
+            'reparaciones',
+        ]);
+        if ($mostrarHistorialCliente) {
+            $servicio->load('vehiculo.cliente.vehiculos.servicios.tecnico');
+            $servicio->vehiculo->cliente->vehiculos->each(function (Vehiculo $vehiculo): void {
+                $vehiculo->setRelation(
+                    'servicios',
+                    $vehiculo->servicios->sortByDesc('fecha_ingreso')->values()
+                );
+            });
+        }
+
+        return view('servicios.show', compact('servicio', 'mostrarHistorialCliente'));
     }
 
     public function store(ServicioRequest $request): RedirectResponse

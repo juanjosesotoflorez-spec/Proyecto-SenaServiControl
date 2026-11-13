@@ -11,15 +11,17 @@
             </div>
             <h2 id="login-title">Iniciar sesión</h2>
             <p class="auth-login-intro">Accede al panel de operación del taller.</p>
-            <form method="POST" action="{{ route('login.store') }}">
+            <form method="POST" action="{{ route('login.store') }}" data-validate novalidate>
                 @csrf
-                <div class="mb-3">
+                <div class="mb-3 form-field">
                     <label class="form-label" for="correo">Correo</label>
-                    <input class="form-control" id="correo" name="correo" type="email" value="{{ old('correo') }}" maxlength="100" autocomplete="username" required autofocus>
+                    <input class="form-control @error('correo') is-invalid @enderror" id="correo" name="correo" type="email" value="{{ old('correo') }}" maxlength="100" autocomplete="username" required autofocus aria-describedby="correo-error">
+                    <div class="invalid-feedback @error('correo') d-block @enderror" id="correo-error" data-validation-feedback>@error('correo'){{ $message }}@enderror</div>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-field">
                     <label class="form-label" for="contrasena">Contraseña</label>
-                    <input class="form-control" id="contrasena" name="contrasena" type="password" autocomplete="current-password" required>
+                    <input class="form-control @error('contrasena') is-invalid @enderror" id="contrasena" name="contrasena" type="password" maxlength="255" autocomplete="current-password" required aria-describedby="contrasena-error">
+                    <div class="invalid-feedback @error('contrasena') d-block @enderror" id="contrasena-error" data-validation-feedback>@error('contrasena'){{ $message }}@enderror</div>
                 </div>
                 <button class="btn btn-success w-100" type="submit">Entrar</button>
             </form>

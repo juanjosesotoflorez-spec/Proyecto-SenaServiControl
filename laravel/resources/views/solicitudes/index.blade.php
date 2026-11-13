@@ -97,7 +97,7 @@
                                     <button class="btn btn-success btn-sm text-nowrap" type="submit">Aceptar solicitud</button>
                                 </form>
                             @elseif ($solicitud->servicio)
-                                <a class="btn btn-outline-secondary btn-sm text-nowrap" href="{{ route('servicios.index') }}">Ver servicio #{{ $solicitud->servicio->id_servicio }}</a>
+                                <a class="btn btn-outline-secondary btn-sm text-nowrap" href="{{ route('servicios.show', $solicitud->servicio) }}">Ver servicio #{{ $solicitud->servicio->id_servicio }}</a>
                             @else
                                 <span class="text-muted small">Pendiente de aceptación</span>
                             @endif
