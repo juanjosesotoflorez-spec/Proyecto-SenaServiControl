@@ -153,6 +153,22 @@
                     if (field.matches('[data-uppercase]') && !/^[A-Z0-9]{6}$/.test(value)) {
                         return 'La placa debe contener exactamente 6 letras mayúsculas o números.';
                     }
+                    if (field.matches('[data-password-policy]')) {
+                        const passwordRequirements = [
+                            { rule: 'length', valid: value.length >= 8, label: 'al menos 8 caracteres' },
+                            { rule: 'uppercase', valid: /\p{Lu}/u.test(value), label: 'una letra mayúscula' },
+                            { rule: 'numbers', valid: (value.match(/\p{N}/gu) || []).length >= 2, label: 'al menos dos números' },
+                            { rule: 'special', valid: /[^\p{L}\p{N}\s]/u.test(value), label: 'un carácter especial' },
+                        ];
+                        field.closest('.form-field')?.querySelectorAll('[data-password-rule]').forEach((item) => {
+                            const requirement = passwordRequirements.find((rule) => rule.rule === item.dataset.passwordRule);
+                            item.classList.toggle('is-met', Boolean(requirement?.valid));
+                        });
+                        const unmetRequirements = passwordRequirements.filter((requirement) => !requirement.valid);
+                        if (value !== '' && unmetRequirements.length > 0) {
+                            return `La contraseña debe incluir ${unmetRequirements.map((requirement) => requirement.label).join(', ')}.`;
+                        }
+                    }
                     if (field.type === 'email' && field.validity.typeMismatch) return 'Ingresa un correo electrónico válido.';
                     if (field.validity.patternMismatch) return field.title || 'El formato ingresado no es válido.';
                     if (field.type === 'date' && field.validity.rangeUnderflow) return 'La fecha no puede ser anterior a la fecha indicada.';

@@ -69,13 +69,16 @@ class ClienteRegistrationTest extends LegacyApiTestCase
             ->assertOk()
             ->assertSee(route('register.store'), false)
             ->assertSee('auth-register-panel')
+            ->assertSee('Una letra mayúscula')
+            ->assertSee('Al menos dos números')
+            ->assertSee('Un carácter especial')
             ->assertSee('../../index.html', false);
 
         $response = $this->post(route('register.store'), [
             'usuario' => 'nuevo-cliente',
             'correo' => 'nuevo@gmail.com',
-            'contrasena' => 'clave-segura-123',
-            'contrasena_confirmation' => 'clave-segura-123',
+            'contrasena' => 'Clave-segura-12',
+            'contrasena_confirmation' => 'Clave-segura-12',
             'nombre' => 'Ana',
             'apellido' => 'Lopez',
             'documento' => '9001001',
@@ -95,7 +98,7 @@ class ClienteRegistrationTest extends LegacyApiTestCase
             'documento' => '9001001',
             'correo' => 'nuevo@gmail.com',
         ]);
-        $this->assertTrue(Hash::check('clave-segura-123', Usuario::query()->firstOrFail()->contrasena));
+        $this->assertTrue(Hash::check('Clave-segura-12', Usuario::query()->firstOrFail()->contrasena));
     }
 
     public function test_web_registration_rejects_mismatched_passwords(): void
@@ -104,8 +107,8 @@ class ClienteRegistrationTest extends LegacyApiTestCase
             ->post(route('register.store'), [
                 'usuario' => 'nuevo-cliente',
                 'correo' => 'nuevo@gmail.com',
-                'contrasena' => 'clave-segura-123',
-                'contrasena_confirmation' => 'otra-clave-123',
+                'contrasena' => 'Clave-segura-12',
+                'contrasena_confirmation' => 'Otra-clave-12',
                 'nombre' => 'Ana',
                 'apellido' => 'Lopez',
                 'documento' => '9001001',
@@ -117,13 +120,34 @@ class ClienteRegistrationTest extends LegacyApiTestCase
         $this->assertDatabaseCount('cliente', 0);
     }
 
+    public function test_customer_registration_rejects_passwords_missing_policy_requirements(): void
+    {
+        foreach (['clave-segura-12', 'Clave-segura-1', 'Clavesegura12'] as $password) {
+            $this->from(route('register'))
+                ->post(route('register.store'), [
+                    'usuario' => 'nuevo-cliente',
+                    'correo' => 'nuevo@gmail.com',
+                    'contrasena' => $password,
+                    'contrasena_confirmation' => $password,
+                    'nombre' => 'Ana',
+                    'apellido' => 'Lopez',
+                    'documento' => '9001001',
+                ])
+                ->assertRedirect(route('register'))
+                ->assertSessionHasErrors('contrasena');
+        }
+
+        $this->assertDatabaseCount('usuario', 0);
+        $this->assertDatabaseCount('cliente', 0);
+    }
+
     public function test_customer_registration_creates_a_unique_user_and_customer_record(): void
     {
         $this->postJson('/api/register', [
             'usuario' => 'nuevo-cliente',
             'correo' => 'nuevo@gmail.com',
-            'contrasena' => 'clave-segura-123',
-            'contrasena_confirmation' => 'clave-segura-123',
+            'contrasena' => 'Clave-segura-12',
+            'contrasena_confirmation' => 'Clave-segura-12',
             'nombre' => 'Ana',
             'apellido' => 'Lopez',
             'documento' => '9001001',
@@ -151,8 +175,8 @@ class ClienteRegistrationTest extends LegacyApiTestCase
         $this->postJson('/api/register', [
             'usuario' => 'nuevo-cliente',
             'correo' => 'correo-no-valido',
-            'contrasena' => 'clave-segura-123',
-            'contrasena_confirmation' => 'clave-segura-123',
+            'contrasena' => 'Clave-segura-12',
+            'contrasena_confirmation' => 'Clave-segura-12',
             'nombre' => 'A1na',
             'apellido' => 'Ló#pez',
             'documento' => '12345',
@@ -178,8 +202,8 @@ class ClienteRegistrationTest extends LegacyApiTestCase
         $this->postJson('/api/register', [
             'usuario' => 'otro-cliente',
             'correo' => 'cliente@gmail.com',
-            'contrasena' => 'clave-segura-123',
-            'contrasena_confirmation' => 'clave-segura-123',
+            'contrasena' => 'Clave-segura-12',
+            'contrasena_confirmation' => 'Clave-segura-12',
             'nombre' => 'Otra',
             'apellido' => 'Persona',
             'documento' => '1001000',

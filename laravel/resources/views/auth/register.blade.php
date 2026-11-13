@@ -51,8 +51,14 @@
                     </div>
                     <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="contrasena">Contraseña</label>
-                        <input class="form-control @error('contrasena') is-invalid @enderror" id="contrasena" name="contrasena" type="password" minlength="8" maxlength="255" autocomplete="new-password" required>
-                        <div class="invalid-feedback @error('contrasena') d-block @enderror" data-validation-feedback>@error('contrasena'){{ $message }}@enderror</div>
+                        <input class="form-control @error('contrasena') is-invalid @enderror" id="contrasena" name="contrasena" type="password" minlength="8" maxlength="255" autocomplete="new-password" data-password-policy required aria-describedby="registro-contrasena-error registro-contrasena-requisitos">
+                        <div class="invalid-feedback @error('contrasena') d-block @enderror" id="registro-contrasena-error" data-validation-feedback>@error('contrasena'){{ $message }}@enderror</div>
+                        <ul class="password-requirements" id="registro-contrasena-requisitos" aria-label="Requisitos de la contraseña">
+                            <li data-password-rule="length">Al menos 8 caracteres</li>
+                            <li data-password-rule="uppercase">Una letra mayúscula</li>
+                            <li data-password-rule="numbers">Al menos dos números</li>
+                            <li data-password-rule="special">Un carácter especial (por ejemplo: !, @ o #)</li>
+                        </ul>
                     </div>
                     <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="contrasena_confirmation">Confirmar contraseña</label>

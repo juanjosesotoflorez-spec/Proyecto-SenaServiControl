@@ -200,6 +200,8 @@ a:hover { color: var(--green-700); }
 .auth-register-panel .auth-login-intro { margin-bottom: 1rem; }
 .auth-register-panel .form-control { min-height: 40px; border-color: #cbd6ce; border-radius: 4px; }
 .auth-register-panel .form-control:focus { border-color: var(--green-700); box-shadow: 0 0 0 .2rem rgba(57,169,0,.16); }
+.password-requirements { display: grid; gap: .2rem; margin: .45rem 0 0; padding-left: 1.15rem; color: var(--muted); font-size: .75rem; }
+.password-requirements li.is-met { color: var(--green-900); }
 
 .page-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.35rem; }
 .page-heading h2 { margin: 0; font-family: 'Manrope', sans-serif; font-size: 1.18rem; font-weight: 800; }
