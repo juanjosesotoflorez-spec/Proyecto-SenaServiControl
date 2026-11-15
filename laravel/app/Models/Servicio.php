@@ -76,24 +76,9 @@ class Servicio extends LegacyModel
         return $this->hasMany(Notificacion::class, 'id_servicio', 'id_servicio');
     }
 
-    public function solicitudes(): HasMany
-    {
-        return $this->hasMany(SolicitudServicio::class, 'id_servicio', 'id_servicio');
-    }
-
-    public function asignacionesTecnico(): HasMany
-    {
-        return $this->hasMany(HistorialAsignacionTecnico::class, 'id_servicio', 'id_servicio');
-    }
-
     public function asignacionActual(): HasOne
     {
         return $this->hasOne(HistorialAsignacionTecnico::class, 'id_servicio', 'id_servicio')
             ->latestOfMany('id_asignacion');
-    }
-
-    public function entregas(): HasMany
-    {
-        return $this->hasMany(EntregaVehiculo::class, 'id_servicio', 'id_servicio');
     }
 }
