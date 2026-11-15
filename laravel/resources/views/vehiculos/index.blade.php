@@ -1,70 +1,138 @@
+<?php
 @extends('layouts.app')
 
 @section('title', 'Vehículos')
-@section('page-title', 'Vehículos')
-@section('eyebrow', 'Parque automotor')
+@section('page-class', 'page-vehiculos')
 
 @section('content')
-    <div class="page-heading">
-        <div><h2>Vehículos registrados</h2><p>Administra placas y datos del parque automotor.</p></div>
-    </div>
-    <form method="POST" action="{{ route('vehiculos.store') }}" class="surface form-panel row g-3" data-validate novalidate>
-        @csrf
-        <div class="col-md-6 form-field">
-            <label class="form-label" for="placa">Placa</label>
-            <input class="form-control @error('placa') is-invalid @enderror" id="placa" name="placa" type="text" minlength="6" maxlength="6" pattern="[A-Z0-9]{6}" value="{{ old('placa') }}" data-uppercase required aria-describedby="placa-error">
-            <div class="invalid-feedback @error('placa') d-block @enderror" id="placa-error" data-validation-feedback>@error('placa'){{ $message }}@enderror</div>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Vehículos</h2>
+            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Volver</a>
         </div>
-        <div class="col-md-6 form-field">
-            <label class="form-label" for="marca">Marca</label>
-            <input class="form-control @error('marca') is-invalid @enderror" id="marca" name="marca" type="text" minlength="2" maxlength="40" value="{{ old('marca') }}" aria-describedby="marca-error">
-            <div class="invalid-feedback @error('marca') d-block @enderror" id="marca-error" data-validation-feedback>@error('marca'){{ $message }}@enderror</div>
-        </div>
-        <div class="col-md-6 form-field">
-            <label class="form-label" for="modelo">Modelo</label>
-            <input class="form-control @error('modelo') is-invalid @enderror" id="modelo" name="modelo" type="text" minlength="2" maxlength="40" value="{{ old('modelo') }}" aria-describedby="modelo-error">
-            <div class="invalid-feedback @error('modelo') d-block @enderror" id="modelo-error" data-validation-feedback>@error('modelo'){{ $message }}@enderror</div>
-        </div>
-        <div class="col-md-6 form-field">
-            <label class="form-label" for="color">Color</label>
-            <input class="form-control @error('color') is-invalid @enderror" id="color" name="color" type="text" maxlength="30" value="{{ old('color') }}" aria-describedby="color-error">
-            <div class="invalid-feedback @error('color') d-block @enderror" id="color-error" data-validation-feedback>@error('color'){{ $message }}@enderror</div>
-        </div>
-        <div class="col-md-6 form-field">
-            <label class="form-label" for="anio">Año</label>
-            <input class="form-control @error('anio') is-invalid @enderror" id="anio" name="anio" type="text" inputmode="numeric" minlength="4" maxlength="4" min="1950" max="{{ (int) date('Y') + 1 }}" value="{{ old('anio') }}" data-digits-only aria-describedby="anio-error">
-            <div class="invalid-feedback @error('anio') d-block @enderror" id="anio-error" data-validation-feedback>@error('anio'){{ $message }}@enderror</div>
-        </div>
-        <div class="col-md-6 form-field">
-            <label class="form-label" for="kilometraje">Kilometraje</label>
-            <input class="form-control @error('kilometraje') is-invalid @enderror" id="kilometraje" name="kilometraje" type="text" inputmode="numeric" maxlength="10" min="0" max="4294967295" value="{{ old('kilometraje') }}" data-digits-only aria-describedby="kilometraje-error">
-            <div class="invalid-feedback @error('kilometraje') d-block @enderror" id="kilometraje-error" data-validation-feedback>@error('kilometraje'){{ $message }}@enderror</div>
-        </div>
-        @if (in_array($usuario->rol->value, ['administrador', 'recepcionista'], true))
-            <div class="col-md-6 form-field">
-                <label class="form-label" for="id_cliente">Cliente</label>
-                <select class="form-select @error('id_cliente') is-invalid @enderror" id="id_cliente" name="id_cliente" required>
-                    <option value="">Selecciona un cliente</option>
-                    @foreach ($clientes as $cliente)
-                        <option value="{{ $cliente->id_cliente }}" @selected(old('id_cliente') == $cliente->id_cliente)>{{ $cliente->nombre }} {{ $cliente->apellido }} · {{ $cliente->documento }}</option>
-                    @endforeach
-                </select>
-                <div class="invalid-feedback @error('id_cliente') d-block @enderror" data-validation-feedback>@error('id_cliente'){{ $message }}@enderror</div>
-            </div>
+
+        @if (session('status'))
+            <div class="alert alert-success">{{ session('status') }}</div>
         @endif
-        <div class="col-12"><button class="btn btn-success" type="submit">Registrar vehículo</button></div>
-    </form>
-    <div class="surface table-panel table-responsive">
-        <table class="table table-striped">
-            <thead><tr><th>Placa</th><th>Marca</th><th>Modelo</th><th>Cliente</th></tr></thead>
-            <tbody>
-                @forelse ($vehiculos as $vehiculo)
-                    <tr><td>{{ $vehiculo->placa }}</td><td>{{ $vehiculo->marca }}</td><td>{{ $vehiculo->modelo }}</td><td>{{ $vehiculo->cliente->nombre }} {{ $vehiculo->cliente->apellido }}</td></tr>
-                @empty
-                    <tr><td class="table-empty" colspan="4">No hay vehículos registrados.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Registrar vehículo</h5>
+
+                <form method="POST" action="{{ route('vehiculos.store') }}" novalidate>
+                    @csrf
+
+                    <div class="row g-3">
+                        @if ($usuario->rol === App\Enums\RolUsuario::Administrador || $usuario->rol === App\Enums\RolUsuario::Recepcionista)
+                            <div class="col-md-12">
+                                <label for="id_cliente" class="form-label">Cliente</label>
+                                <select class="form-select @error('id_cliente') is-invalid @enderror" id="id_cliente" name="id_cliente">
+                                    <option value="">Selecciona un cliente</option>
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id_cliente }}" {{ old('id_cliente') == $cliente->id_cliente ? 'selected' : '' }}>
+                                            {{ $cliente->nombre }} {{ $cliente->apellido }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('id_cliente')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endif
+
+                        <div class="col-md-6">
+                            <label for="placa" class="form-label">Placa</label>
+                            <input type="text" class="form-control @error('placa') is-invalid @enderror" id="placa" name="placa" value="{{ old('placa') }}" required>
+                            @error('placa')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="marca" class="form-label">Marca</label>
+                            <input type="text" class="form-control @error('marca') is-invalid @enderror" id="marca" name="marca" value="{{ old('marca') }}">
+                            @error('marca')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="modelo" class="form-label">Modelo</label>
+                            <input type="text" class="form-control @error('modelo') is-invalid @enderror" id="modelo" name="modelo" value="{{ old('modelo') }}">
+                            @error('modelo')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="color" class="form-label">Color</label>
+                            <input type="text" class="form-control @error('color') is-invalid @enderror" id="color" name="color" value="{{ old('color') }}">
+                            @error('color')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="anio" class="form-label">Año</label>
+                            <input type="number" class="form-control @error('anio') is-invalid @enderror" id="anio" name="anio" value="{{ old('anio') }}">
+                            @error('anio')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="kilometraje" class="form-label">Kilometraje</label>
+                            <input type="number" class="form-control @error('kilometraje') is-invalid @enderror" id="kilometraje" name="kilometraje" value="{{ old('kilometraje') }}">
+                            @error('kilometraje')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-success">Guardar vehículo</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Listado de vehículos</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Placa</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Color</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($vehiculos as $vehiculo)
+                                <tr>
+                                    <td>{{ $vehiculo->cliente?->nombre ?? 'N/A' }} {{ $vehiculo->cliente?->apellido ?? '' }}</td>
+                                    <td>{{ $vehiculo->placa }}</td>
+                                    <td>{{ $vehiculo->marca ?? 'N/A' }}</td>
+                                    <td>{{ $vehiculo->modelo ?? 'N/A' }}</td>
+                                    <td>{{ $vehiculo->color ?? 'N/A' }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">No hay vehículos registrados.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-3">
+                    {{ $vehiculos->links() }}
+                </div>
+            </div>
+        </div>
     </div>
-    {{ $vehiculos->links() }}
 @endsection
