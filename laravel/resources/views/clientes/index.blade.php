@@ -10,6 +10,7 @@
     </div>
     <form method="POST" action="{{ route('clientes.store') }}" class="surface form-panel row g-3" data-validate novalidate>
         @csrf
+        <div class="col-12"><p class="form-required-note">Todos los campos son obligatorios.</p></div>
         <div class="col-md-6 form-field">
             <label class="form-label" for="nombre">Nombre</label>
             <input class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" type="text" minlength="2" maxlength="50" value="{{ old('nombre') }}" autocomplete="given-name" data-letters-only required aria-describedby="nombre-error">
@@ -27,17 +28,17 @@
         </div>
         <div class="col-md-6 form-field">
             <label class="form-label" for="telefono">Teléfono</label>
-            <input class="form-control @error('telefono') is-invalid @enderror" id="telefono" name="telefono" type="tel" inputmode="numeric" minlength="10" maxlength="10" value="{{ old('telefono') }}" autocomplete="tel" data-digits-only aria-describedby="telefono-error">
+            <input class="form-control @error('telefono') is-invalid @enderror" id="telefono" name="telefono" type="tel" inputmode="numeric" minlength="10" maxlength="10" value="{{ old('telefono') }}" autocomplete="tel" data-digits-only required aria-describedby="telefono-error">
             <div class="invalid-feedback @error('telefono') d-block @enderror" id="telefono-error" data-validation-feedback>@error('telefono'){{ $message }}@enderror</div>
         </div>
         <div class="col-md-6 form-field">
             <label class="form-label" for="correo">Correo</label>
-            <input class="form-control @error('correo') is-invalid @enderror" id="correo" name="correo" type="email" maxlength="100" value="{{ old('correo') }}" autocomplete="email" aria-describedby="correo-error">
+            <input class="form-control @error('correo') is-invalid @enderror" id="correo" name="correo" type="email" maxlength="100" value="{{ old('correo') }}" autocomplete="email" required aria-describedby="correo-error">
             <div class="invalid-feedback @error('correo') d-block @enderror" id="correo-error" data-validation-feedback>@error('correo'){{ $message }}@enderror</div>
         </div>
         <div class="col-12 form-field">
             <label class="form-label" for="direccion">Dirección</label>
-            <input class="form-control @error('direccion') is-invalid @enderror" id="direccion" name="direccion" type="text" minlength="5" maxlength="100" value="{{ old('direccion') }}" aria-describedby="direccion-error">
+            <input class="form-control @error('direccion') is-invalid @enderror" id="direccion" name="direccion" type="text" minlength="5" maxlength="100" value="{{ old('direccion') }}" required aria-describedby="direccion-error">
             <div class="invalid-feedback @error('direccion') d-block @enderror" id="direccion-error" data-validation-feedback>@error('direccion'){{ $message }}@enderror</div>
         </div>
         <div class="col-12"><button class="btn btn-success" type="submit">Registrar cliente</button></div>

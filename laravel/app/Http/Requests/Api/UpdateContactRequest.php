@@ -24,18 +24,27 @@ class UpdateContactRequest extends FormRequest
         $clienteId = $usuario instanceof Usuario
             ? Cliente::query()->where('id_usuario', $usuario->getKey())->value('id_cliente')
             : null;
+        $isProfileForm = $this->routeIs('perfil.update');
+        $emailRules = [
+            'required',
+            'email:rfc',
+            'max:100',
+            Rule::unique('usuario', 'correo')->ignore($usuario?->getAuthIdentifier(), 'id_usuario'),
+            Rule::unique('cliente', 'correo')->ignore($clienteId, 'id_cliente'),
+        ];
+
+        if (! $isProfileForm) {
+            array_unshift($emailRules, 'sometimes');
+        }
 
         return [
-            'correo' => [
-                'sometimes',
-                'required',
-                'email:rfc',
-                'max:100',
-                Rule::unique('usuario', 'correo')->ignore($usuario?->getAuthIdentifier(), 'id_usuario'),
-                Rule::unique('cliente', 'correo')->ignore($clienteId, 'id_cliente'),
-            ],
-            'telefono' => ['sometimes', 'nullable', 'string', 'digits:10'],
-            'direccion' => ['sometimes', 'nullable', 'string', 'min:5', 'max:100'],
+            'correo' => $emailRules,
+            'telefono' => $isProfileForm
+                ? ['required', 'string', 'digits:10']
+                : ['sometimes', 'nullable', 'string', 'digits:10'],
+            'direccion' => $isProfileForm
+                ? ['required', 'string', 'min:5', 'max:100']
+                : ['sometimes', 'nullable', 'string', 'min:5', 'max:100'],
         ];
     }
 
@@ -46,7 +55,9 @@ class UpdateContactRequest extends FormRequest
             'correo.email' => 'Ingresa un correo electrónico válido.',
             'correo.max' => 'El correo no puede superar 100 caracteres.',
             'correo.unique' => 'Este correo ya está registrado por otra cuenta.',
+            'telefono.required' => 'El teléfono es obligatorio.',
             'telefono.digits' => 'El teléfono debe contener exactamente 10 dígitos.',
+            'direccion.required' => 'La dirección es obligatoria.',
             'direccion.min' => 'La dirección debe tener al menos 5 caracteres.',
             'direccion.max' => 'La dirección no puede superar 100 caracteres.',
         ];
@@ -56,6 +67,10 @@ class UpdateContactRequest extends FormRequest
     {
         return [
             function (Validator $validator): void {
+                if ($this->routeIs('perfil.update')) {
+                    return;
+                }
+
                 if (! $this->hasAny(['correo', 'telefono', 'direccion'])) {
                     $validator->errors()->add('contacto', 'Debes proporcionar al menos un dato de contacto.');
                 }

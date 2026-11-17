@@ -63,6 +63,7 @@
                     @csrf
                     @method('PUT')
                     <div class="row g-3">
+                        <div class="col-12"><p class="form-required-note">Todos los campos son obligatorios.</p></div>
                         <div class="col-12 form-field">
                             <label class="form-label" for="correo">Correo electrónico</label>
                             <input
@@ -90,6 +91,7 @@
                                 pattern="[0-9]{10}"
                                 value="{{ old('telefono', $cliente->telefono) }}"
                                 data-digits-only
+                                required
                                 aria-describedby="telefono-error">
                             <div class="invalid-feedback @error('telefono') d-block @enderror" id="telefono-error" data-validation-feedback>@error('telefono'){{ $message }}@enderror</div>
                         </div>
@@ -103,6 +105,7 @@
                                 minlength="5"
                                 maxlength="100"
                                 value="{{ old('direccion', $cliente->direccion) }}"
+                                required
                                 aria-describedby="direccion-error">
                             <div class="invalid-feedback @error('direccion') d-block @enderror" id="direccion-error" data-validation-feedback>@error('direccion'){{ $message }}@enderror</div>
                         </div>

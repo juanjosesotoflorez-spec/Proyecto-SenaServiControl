@@ -19,6 +19,7 @@
     @if (auth()->user()->rol->value === 'recepcionista')
         <form method="POST" action="{{ route('servicios.store') }}" class="surface form-panel row g-3" data-validate novalidate>
             @csrf
+            <div class="col-12"><p class="form-required-note">Todos los campos son obligatorios.</p></div>
             <div class="col-md-6 form-field">
                 <label class="form-label" for="tipo_servicio">Tipo de servicio</label>
                 <select class="form-select @error('tipo_servicio') is-invalid @enderror" id="tipo_servicio" name="tipo_servicio" required>
@@ -48,7 +49,7 @@
             </div>
             <div class="col-md-4 form-field">
                 <label class="form-label" for="fecha_entrega_estimada">Fecha estimada de entrega</label>
-                <input class="form-control @error('fecha_entrega_estimada') is-invalid @enderror" id="fecha_entrega_estimada" name="fecha_entrega_estimada" type="date" min="{{ old('fecha_ingreso', date('Y-m-d')) }}" max="9999-12-31" value="{{ old('fecha_entrega_estimada') }}" aria-describedby="fecha-entrega-error">
+                <input class="form-control @error('fecha_entrega_estimada') is-invalid @enderror" id="fecha_entrega_estimada" name="fecha_entrega_estimada" type="date" min="{{ old('fecha_ingreso', date('Y-m-d')) }}" max="9999-12-31" value="{{ old('fecha_entrega_estimada') }}" required aria-describedby="fecha-entrega-error">
                 <div class="invalid-feedback @error('fecha_entrega_estimada') d-block @enderror" id="fecha-entrega-error" data-validation-feedback>@error('fecha_entrega_estimada'){{ $message }}@enderror</div>
             </div>
             <div class="col-md-4 form-field">
@@ -206,6 +207,7 @@
                             <form method="POST" action="{{ route('servicios.progress', $servicio) }}" class="modal-body service-progress-form" data-validate novalidate>
                                 @csrf
                                 <input type="hidden" name="form_service_id" value="{{ $servicio->id_servicio }}">
+                                <p class="form-required-note">Todos los campos visibles son obligatorios.</p>
                                 <div class="service-process-meta">
                                     <span>Orden #{{ $servicio->id_servicio }}</span>
                                     <x-service-status :status="$servicio->estado" />

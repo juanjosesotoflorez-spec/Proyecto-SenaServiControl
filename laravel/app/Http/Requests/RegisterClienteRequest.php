@@ -14,6 +14,8 @@ class RegisterClienteRequest extends FormRequest
 
     public function rules(): array
     {
+        $contactFieldRule = $this->routeIs('register.store') ? 'required' : 'nullable';
+
         return [
             'usuario' => ['required', 'string', 'min:3', 'max:50', Rule::unique('usuario', 'usuario')],
             'correo' => ['required', 'email:rfc', 'max:100', Rule::unique('usuario', 'correo')],
@@ -30,8 +32,8 @@ class RegisterClienteRequest extends FormRequest
             'nombre' => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL ]+$/u'],
             'apellido' => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL ]+$/u'],
             'documento' => ['required', 'string', 'digits_between:6,12', Rule::unique('cliente', 'documento')],
-            'telefono' => ['nullable', 'string', 'digits:10'],
-            'direccion' => ['nullable', 'string', 'min:5', 'max:100'],
+            'telefono' => [$contactFieldRule, 'string', 'digits:10'],
+            'direccion' => [$contactFieldRule, 'string', 'min:5', 'max:100'],
         ];
     }
 
@@ -68,8 +70,10 @@ class RegisterClienteRequest extends FormRequest
             'documento.string' => 'El documento debe contener solo números.',
             'documento.digits_between' => 'El documento debe contener entre 6 y 12 dígitos, sin espacios ni signos.',
             'documento.unique' => 'Ya existe un cliente con este documento.',
+            'telefono.required' => 'El teléfono es obligatorio.',
             'telefono.string' => 'El teléfono debe contener solo números.',
             'telefono.digits' => 'El teléfono debe contener exactamente 10 dígitos.',
+            'direccion.required' => 'La dirección es obligatoria.',
             'direccion.string' => 'La dirección debe ser un texto válido.',
             'direccion.min' => 'La dirección debe tener al menos 5 caracteres.',
             'direccion.max' => 'La dirección no puede superar 100 caracteres.',

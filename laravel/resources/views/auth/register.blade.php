@@ -14,6 +14,7 @@
             <form method="POST" action="{{ route('register.store') }}" data-validate novalidate>
                 @csrf
                 <div class="row g-2">
+                    <div class="col-12"><p class="form-required-note">Todos los campos son obligatorios.</p></div>
                     <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="usuario">Nombre de usuario</label>
                         <input class="form-control @error('usuario') is-invalid @enderror" id="usuario" name="usuario" type="text" value="{{ old('usuario') }}" minlength="3" maxlength="50" autocomplete="username" required aria-describedby="registro-usuario-error">
@@ -41,12 +42,12 @@
                     </div>
                     <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="telefono">Teléfono</label>
-                        <input class="form-control @error('telefono') is-invalid @enderror" id="telefono" name="telefono" type="tel" inputmode="numeric" value="{{ old('telefono') }}" minlength="10" maxlength="10" autocomplete="tel" data-digits-only aria-describedby="registro-telefono-error">
+                        <input class="form-control @error('telefono') is-invalid @enderror" id="telefono" name="telefono" type="tel" inputmode="numeric" value="{{ old('telefono') }}" minlength="10" maxlength="10" autocomplete="tel" data-digits-only required aria-describedby="registro-telefono-error">
                         <div class="invalid-feedback @error('telefono') d-block @enderror" id="registro-telefono-error" data-validation-feedback>@error('telefono'){{ $message }}@enderror</div>
                     </div>
                     <div class="col-12 form-field">
                         <label class="form-label" for="direccion">Dirección</label>
-                        <input class="form-control @error('direccion') is-invalid @enderror" id="direccion" name="direccion" type="text" value="{{ old('direccion') }}" minlength="5" maxlength="100" autocomplete="street-address" aria-describedby="registro-direccion-error">
+                        <input class="form-control @error('direccion') is-invalid @enderror" id="direccion" name="direccion" type="text" value="{{ old('direccion') }}" minlength="5" maxlength="100" autocomplete="street-address" required aria-describedby="registro-direccion-error">
                         <div class="invalid-feedback @error('direccion') d-block @enderror" id="registro-direccion-error" data-validation-feedback>@error('direccion'){{ $message }}@enderror</div>
                     </div>
                     <div class="col-12 col-sm-6 form-field">

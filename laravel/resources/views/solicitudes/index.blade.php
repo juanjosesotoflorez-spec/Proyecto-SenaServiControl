@@ -27,6 +27,7 @@
         @else
             <form method="POST" action="{{ route('solicitudes.store') }}" class="surface form-panel row g-3">
                 @csrf
+                <div class="col-12"><p class="form-required-note">Todos los campos son obligatorios.</p></div>
                 <div class="col-12 col-md-6">
                     <label class="form-label" for="id_vehiculo">Vehículo</label>
                     <select class="form-select" id="id_vehiculo" name="id_vehiculo" required>
