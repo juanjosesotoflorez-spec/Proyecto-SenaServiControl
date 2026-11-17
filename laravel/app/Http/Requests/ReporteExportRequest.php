@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\EstadoServicioEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ReporteExportRequest extends FormRequest
 {
@@ -15,11 +17,11 @@ class ReporteExportRequest extends FormRequest
     {
         return [
             'tipo_reporte' => ['required', 'in:operativo,productividad,vehiculos'],
-            'formato'      => ['required', 'in:pdf,csv,excel'],
+            'formato' => ['required', 'in:pdf,csv,excel'],
             'fecha_inicio' => ['required', 'date'],
-            'fecha_fin'    => ['required', 'date', 'after_or_equal:fecha_inicio'],
-            'tecnico_id'   => ['nullable', 'integer'],
-            'estado'       => ['nullable', 'string', 'max:30'],
+            'fecha_fin' => ['required', 'date', 'after_or_equal:fecha_inicio'],
+            'tecnico_id' => ['nullable', 'integer', 'exists:tecnico,id_tecnico'],
+            'estado' => ['nullable', Rule::enum(EstadoServicioEnum::class)],
         ];
     }
 

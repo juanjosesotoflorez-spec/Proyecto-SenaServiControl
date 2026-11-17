@@ -53,6 +53,7 @@ class OperationsModulesTest extends LegacyApiTestCase
             ->get(route('reportes.index'))
             ->assertOk()
             ->assertSee(route('reportes.pdf'))
+            ->assertSee(route('reportes.pdf.servicios'))
             ->assertSee(route('reportes.pdf.print'));
 
         $download = $this->get(route('reportes.pdf'))
@@ -64,6 +65,71 @@ class OperationsModulesTest extends LegacyApiTestCase
             ->assertOk()
             ->assertHeader('content-type', 'application/pdf');
         self::assertStringContainsString('inline;', (string) $print->headers->get('content-disposition'));
+    }
+
+    public function test_administrator_can_export_filtered_services_as_excel_compatible_csv(): void
+    {
+        $this->createOperationsSchema();
+        $this->createService('Finalizado', '2026-11-10');
+        $this->createService('Pendiente', '2026-11-11');
+        $administrator = $this->createUsuario(['rol' => RolUsuario::Administrador]);
+
+        $response = $this->actingAs($administrator)
+            ->post(route('reportes.exportar'), [
+                'tipo_reporte' => 'operativo',
+                'fecha_inicio' => '2026-11-01',
+                'fecha_fin' => '2026-11-30',
+                'formato' => 'excel',
+                'estado' => 'Finalizado',
+            ]);
+
+        $response->assertOk()
+            ->assertHeader('content-type', 'text/csv; charset=UTF-8')
+            ->assertHeader('content-disposition', 'attachment; filename="reporte_operativo_2026-11-01.csv"');
+        self::assertStringContainsString('ABC001', $response->streamedContent());
+        self::assertStringNotContainsString('ABC002', $response->streamedContent());
+    }
+
+    public function test_filtered_service_pdf_contains_a_valid_pdf_document(): void
+    {
+        $this->createOperationsSchema();
+        $this->createService('Finalizado', '2026-11-10');
+        $administrator = $this->createUsuario(['rol' => RolUsuario::Administrador]);
+
+        $response = $this->actingAs($administrator)
+            ->post(route('reportes.exportar'), [
+                'tipo_reporte' => 'operativo',
+                'fecha_inicio' => '2026-11-01',
+                'fecha_fin' => '2026-11-30',
+                'formato' => 'pdf',
+            ]);
+
+        $response->assertOk()
+            ->assertHeader('content-type', 'application/pdf');
+        self::assertStringStartsWith('%PDF-', $response->getContent());
+        self::assertStringContainsString('attachment;', (string) $response->headers->get('content-disposition'));
+    }
+
+    public function test_productivity_exports_include_technician_totals(): void
+    {
+        $this->createOperationsSchema();
+        $this->createService('Finalizado', '2026-11-10');
+        $administrator = $this->createUsuario(['rol' => RolUsuario::Administrador]);
+        $filters = [
+            'tipo_reporte' => 'productividad',
+            'fecha_inicio' => '2026-11-01',
+            'fecha_fin' => '2026-11-30',
+        ];
+
+        $csv = $this->actingAs($administrator)->post(route('reportes.exportar'), $filters + ['formato' => 'excel']);
+        $csv->assertOk();
+        $csvContent = $csv->streamedContent();
+        self::assertStringContainsString('Técnico;Servicios;Ingresos', $csvContent);
+        self::assertStringContainsString('"Técnico Prueba";1;150000', $csvContent);
+
+        $pdf = $this->post(route('reportes.exportar'), $filters + ['formato' => 'pdf']);
+        $pdf->assertOk()->assertHeader('content-type', 'application/pdf');
+        self::assertStringStartsWith('%PDF-', $pdf->getContent());
     }
 
     public function test_receptionist_can_open_service_details_with_client_and_vehicle_history(): void

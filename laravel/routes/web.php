@@ -51,7 +51,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/solicitudes', [SolicitudServicioController::class, 'store'])->name('solicitudes.store');
     Route::post('/solicitudes/{solicitud}/aceptar', [SolicitudServicioController::class, 'accept'])->name('solicitudes.accept');
 
+    // Rutas de Reportes (Incluyendo la ruta de exportación del formulario)
     Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
-    Route::get('/reportes/pdf/imprimir', [ReporteController::class, 'print'])->name('reportes.pdf.print');
-    Route::get('/reportes/pdf', [ReporteController::class, 'pdf'])->name('reportes.pdf');
+    Route::post('/reportes/exportar', [ReporteController::class, 'exportar'])->name('reportes.exportar'); // <-- ¡Añadida aquí!
+    Route::get('/reportes/pdf/imprimir', [ReporteController::class, 'print'])
+        ->middleware('role:administrador,recepcionista')
+        ->name('reportes.pdf.print');
+    Route::get('/reportes/pdf/servicios', [ReporteController::class, 'pdfServicios'])
+        ->middleware('role:administrador,recepcionista')
+        ->name('reportes.pdf.servicios');
+    Route::get('/reportes/pdf', [ReporteController::class, 'pdf'])
+        ->middleware('role:administrador,recepcionista')
+        ->name('reportes.pdf');
 });
