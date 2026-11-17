@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Crear cuenta')
-@section('page-class', 'auth-background')
+@section('page-class', 'auth-background auth-register-page')
 
 @section('content')
     <div class="auth-content">
@@ -16,8 +16,8 @@
                 <div class="row g-2">
                     <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="usuario">Nombre de usuario</label>
-                        <input class="form-control @error('usuario') is-invalid @enderror" id="usuario" name="usuario" type="text" value="{{ old('usuario') }}" minlength="3" maxlength="50" autocomplete="username" required autofocus>
-                        <div class="invalid-feedback @error('usuario') d-block @enderror" data-validation-feedback>@error('usuario'){{ $message }}@enderror</div>
+                        <input class="form-control @error('usuario') is-invalid @enderror" id="usuario" name="usuario" type="text" value="{{ old('usuario') }}" minlength="3" maxlength="50" autocomplete="username" required aria-describedby="registro-usuario-error">
+                        <div class="invalid-feedback @error('usuario') d-block @enderror" id="registro-usuario-error" data-validation-feedback>@error('usuario'){{ $message }}@enderror</div>
                     </div>
                     <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="correo">Correo</label>
@@ -53,17 +53,21 @@
                         <label class="form-label" for="contrasena">Contraseña</label>
                         <input class="form-control @error('contrasena') is-invalid @enderror" id="contrasena" name="contrasena" type="password" minlength="8" maxlength="255" autocomplete="new-password" data-password-policy required aria-describedby="registro-contrasena-error registro-contrasena-requisitos">
                         <div class="invalid-feedback @error('contrasena') d-block @enderror" id="registro-contrasena-error" data-validation-feedback>@error('contrasena'){{ $message }}@enderror</div>
-                        <ul class="password-requirements" id="registro-contrasena-requisitos" aria-label="Requisitos de la contraseña">
-                            <li data-password-rule="length">Al menos 8 caracteres</li>
-                            <li data-password-rule="uppercase">Una letra mayúscula</li>
-                            <li data-password-rule="numbers">Al menos dos números</li>
-                            <li data-password-rule="special">Un carácter especial (por ejemplo: !, @ o #)</li>
-                        </ul>
+                        <div class="password-guidance" id="registro-contrasena-requisitos" data-password-guidance hidden>
+                            <p class="password-guidance-title">Tu contraseña debe incluir:</p>
+                            <ul class="password-requirements" data-password-requirements>
+                                <li data-password-rule="length">Al menos 8 caracteres</li>
+                                <li data-password-rule="uppercase">Una letra mayúscula</li>
+                                <li data-password-rule="numbers">Al menos dos números</li>
+                                <li data-password-rule="special">Un carácter especial (por ejemplo: !, @ o #)</li>
+                            </ul>
+                            <p class="password-success" data-password-success hidden role="status">La contraseña cumple todos los requisitos.</p>
+                        </div>
                     </div>
                     <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="contrasena_confirmation">Confirmar contraseña</label>
-                        <input class="form-control" id="contrasena_confirmation" name="contrasena_confirmation" type="password" minlength="8" maxlength="255" autocomplete="new-password" required>
-                        <div class="invalid-feedback" data-validation-feedback></div>
+                        <input class="form-control" id="contrasena_confirmation" name="contrasena_confirmation" type="password" minlength="8" maxlength="255" autocomplete="new-password" required aria-describedby="registro-confirmar-contrasena-error">
+                        <div class="invalid-feedback" id="registro-confirmar-contrasena-error" data-validation-feedback></div>
                     </div>
                     <div class="col-12">
                         <button class="btn btn-success w-100" type="submit">Registrarse</button>

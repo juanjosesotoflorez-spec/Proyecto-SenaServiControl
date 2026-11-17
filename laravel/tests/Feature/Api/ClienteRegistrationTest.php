@@ -72,6 +72,8 @@ class ClienteRegistrationTest extends LegacyApiTestCase
             ->assertSee('Una letra mayúscula')
             ->assertSee('Al menos dos números')
             ->assertSee('Un carácter especial')
+            ->assertSee('data-password-guidance hidden', false)
+            ->assertSee('data-password-success hidden', false)
             ->assertSee('../../index.html', false);
 
         $response = $this->post(route('register.store'), [

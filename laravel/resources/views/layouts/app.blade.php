@@ -129,9 +129,45 @@
 
                 const feedbackFor = (field) => field.closest('.form-field')?.querySelector('[data-validation-feedback]');
 
+                const passwordRequirementsFor = (value) => [
+                    { rule: 'length', valid: value.length >= 8, label: 'al menos 8 caracteres' },
+                    { rule: 'uppercase', valid: /\p{Lu}/u.test(value), label: 'una letra mayúscula' },
+                    { rule: 'numbers', valid: (value.match(/\p{N}/gu) || []).length >= 2, label: 'al menos dos números' },
+                    { rule: 'special', valid: /[^\p{L}\p{N}\s]/u.test(value), label: 'un carácter especial' },
+                ];
+
+                const updatePasswordGuidance = (field, forceShow = false) => {
+                    const formField = field.closest('.form-field');
+                    const guidance = formField ? formField.querySelector('[data-password-guidance]') : null;
+                    if (!guidance) return [];
+
+                    const requirements = passwordRequirementsFor(field.value);
+                    const allRequirementsMet = requirements.every((requirement) => requirement.valid);
+                    const requirementList = guidance.querySelector('[data-password-requirements]');
+                    const successMessage = guidance.querySelector('[data-password-success]');
+                    const shouldShow = forceShow
+                        || field.value !== ''
+                        || field.dataset.serverInvalid === 'true'
+                        || field.dataset.validationSubmitted === 'true'
+                        || field.dataset.touched === 'true';
+
+                    guidance.hidden = !shouldShow;
+                    if (requirementList) requirementList.hidden = allRequirementsMet;
+                    if (successMessage) successMessage.hidden = !allRequirementsMet;
+                    formField.querySelectorAll('[data-password-rule]').forEach((item) => {
+                        const requirement = requirements.find((rule) => rule.rule === item.dataset.passwordRule);
+                        item.classList.toggle('is-met', Boolean(requirement?.valid));
+                    });
+
+                    return requirements;
+                };
+
                 const validationMessage = (field) => {
                     const value = field.value;
                     const label = field.labels?.[0]?.textContent.trim().toLowerCase() || 'este campo';
+                    const passwordRequirements = field.matches('[data-password-policy]')
+                        ? updatePasswordGuidance(field)
+                        : [];
 
                     if (field.required && value.trim() === '') return `El campo ${label} es obligatorio.`;
                     if (value === '') return '';
@@ -154,20 +190,8 @@
                         return 'La placa debe contener exactamente 6 letras mayúsculas o números.';
                     }
                     if (field.matches('[data-password-policy]')) {
-                        const passwordRequirements = [
-                            { rule: 'length', valid: value.length >= 8, label: 'al menos 8 caracteres' },
-                            { rule: 'uppercase', valid: /\p{Lu}/u.test(value), label: 'una letra mayúscula' },
-                            { rule: 'numbers', valid: (value.match(/\p{N}/gu) || []).length >= 2, label: 'al menos dos números' },
-                            { rule: 'special', valid: /[^\p{L}\p{N}\s]/u.test(value), label: 'un carácter especial' },
-                        ];
-                        field.closest('.form-field')?.querySelectorAll('[data-password-rule]').forEach((item) => {
-                            const requirement = passwordRequirements.find((rule) => rule.rule === item.dataset.passwordRule);
-                            item.classList.toggle('is-met', Boolean(requirement?.valid));
-                        });
                         const unmetRequirements = passwordRequirements.filter((requirement) => !requirement.valid);
-                        if (value !== '' && unmetRequirements.length > 0) {
-                            return `La contraseña debe incluir ${unmetRequirements.map((requirement) => requirement.label).join(', ')}.`;
-                        }
+                        if (unmetRequirements.length > 0) return 'Completa los requisitos indicados para la contraseña.';
                     }
                     if (field.type === 'email' && field.validity.typeMismatch) return 'Ingresa un correo electrónico válido.';
                     if (field.validity.patternMismatch) return field.title || 'El formato ingresado no es válido.';
@@ -227,6 +251,7 @@
                             field.classList.add('is-invalid');
                             field.setAttribute('aria-invalid', 'true');
                         }
+                        if (field.matches('[data-password-policy]')) updatePasswordGuidance(field);
 
                         field.addEventListener('input', () => {
                             if (field.matches('[data-uppercase]')) {
@@ -244,7 +269,11 @@
                             }
                         });
                         field.addEventListener('blur', () => {
+                            field.dataset.touched = 'true';
                             validateField(field);
+                        });
+                        field.addEventListener('focus', () => {
+                            if (field.matches('[data-password-policy]')) updatePasswordGuidance(field, true);
                         });
                         field.addEventListener('change', () => {
                             validateField(field);
@@ -254,6 +283,7 @@
                     form.addEventListener('submit', (event) => {
                         let valid = true;
                         formFields.forEach((field) => {
+                            if (field.matches('[data-password-policy]')) field.dataset.validationSubmitted = 'true';
                             if (!validateField(field)) valid = false;
                         });
                         if (!valid) {
