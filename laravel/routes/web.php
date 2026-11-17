@@ -1,5 +1,7 @@
 <?php
-
+use App\Http\Controllers\AdminDashboardController;// agrego quintero
+use App\Http\Controllers\AsignacionTecnicoController;// agrego quintero
+use App\Http\Controllers\ReparacionController; // agrego quintero
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ClientePerfilController;
@@ -54,4 +56,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
     Route::get('/reportes/pdf/imprimir', [ReporteController::class, 'print'])->name('reportes.pdf.print');
     Route::get('/reportes/pdf', [ReporteController::class, 'pdf'])->name('reportes.pdf');
+
+    // ==========================================
+    // 2. BLOQUE SAMUEL QUINTERO (M3 y M4)
+    // ==========================================
+    Route::get('/servicios/{servicio}/diagnostico', [ReparacionController::class, 'create'])->name('servicios.diagnostico.create');
+    Route::post('/servicios/{servicio}/diagnostico', [ReparacionController::class, 'store'])->name('servicios.diagnostico.store');
+
+    Route::get('/servicios/{servicio}/asignacion', [AsignacionTecnicoController::class, 'edit'])->name('servicios.asignacion.edit');
+    Route::post('/servicios/{servicio}/asignacion', [AsignacionTecnicoController::class, 'store'])->name('servicios.asignacion.store');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/monitoreo', [AdminDashboardController::class, 'monitoreo'])->name('monitoreo');
+        Route::get('/incidencias', [AdminDashboardController::class, 'incidencias'])->name('incidencias');
+        Route::post('/incidencias', [AdminDashboardController::class, 'storeIncidencia'])->name('incidencias.store');
+        Route::patch('/incidencias/{incidencia}', [AdminDashboardController::class, 'updateIncidencia'])->name('incidencias.update');
+        Route::get('/auditoria', [AdminDashboardController::class, 'auditoria'])->name('auditoria');
+    });
 });
