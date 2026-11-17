@@ -12,7 +12,7 @@ use App\Http\Controllers\VehiculoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->away('../../index.html');
+    return redirect()->away('/SENA_SERVITECA_1/index.html');
 });
 
 Route::middleware('guest')->group(function () {
