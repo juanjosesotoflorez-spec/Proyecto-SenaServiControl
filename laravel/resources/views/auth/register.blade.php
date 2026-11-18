@@ -52,7 +52,12 @@
                     </div>
                     <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="contrasena">Contraseña</label>
-                        <input class="form-control @error('contrasena') is-invalid @enderror" id="contrasena" name="contrasena" type="password" minlength="8" maxlength="255" autocomplete="new-password" data-password-policy required aria-describedby="registro-contrasena-error registro-contrasena-requisitos">
+                        <div class="input-group password-input-group">
+                            <input class="form-control @error('contrasena') is-invalid @enderror" id="contrasena" name="contrasena" type="password" minlength="8" maxlength="255" autocomplete="new-password" data-password-policy required aria-describedby="registro-contrasena-error registro-contrasena-requisitos">
+                            <button class="btn btn-outline-secondary password-toggle" type="button" data-password-toggle aria-controls="contrasena" aria-label="Mostrar contraseña" aria-pressed="false">
+                                <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
                         <div class="invalid-feedback @error('contrasena') d-block @enderror" id="registro-contrasena-error" data-validation-feedback>@error('contrasena'){{ $message }}@enderror</div>
                         <div class="password-guidance" id="registro-contrasena-requisitos" data-password-guidance hidden>
                             <p class="password-guidance-title">Tu contraseña debe incluir:</p>
@@ -67,7 +72,12 @@
                     </div>
                     <div class="col-12 col-sm-6 form-field">
                         <label class="form-label" for="contrasena_confirmation">Confirmar contraseña</label>
-                        <input class="form-control" id="contrasena_confirmation" name="contrasena_confirmation" type="password" minlength="8" maxlength="255" autocomplete="new-password" required aria-describedby="registro-confirmar-contrasena-error">
+                        <div class="input-group password-input-group">
+                            <input class="form-control" id="contrasena_confirmation" name="contrasena_confirmation" type="password" minlength="8" maxlength="255" autocomplete="new-password" required aria-describedby="registro-confirmar-contrasena-error">
+                            <button class="btn btn-outline-secondary password-toggle" type="button" data-password-toggle aria-controls="contrasena_confirmation" aria-label="Mostrar contraseña" aria-pressed="false">
+                                <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
                         <div class="invalid-feedback" id="registro-confirmar-contrasena-error" data-validation-feedback></div>
                     </div>
                     <div class="col-12">

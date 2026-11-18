@@ -91,9 +91,59 @@ document.addEventListener('DOMContentLoaded', function () {
   if (carousel) {
     const items = carousel.querySelectorAll('.carousel-item');
     if (items.length > 0) {
-      bootstrap.Carousel.getOrCreateInstance(carousel, {
-        interval: 5000,
-        ride: 'carousel'
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const carouselInstance = bootstrap.Carousel.getOrCreateInstance(carousel, {
+        interval: 6500,
+        pause: false,
+        ride: false
+      });
+      const toggle = carousel.querySelector('[data-carousel-toggle]');
+      const toggleLabel = toggle?.querySelector('[data-carousel-toggle-label]');
+      const toggleIcon = toggle?.querySelector('.hero-carousel-toggle-icon');
+      const counter = carousel.querySelector('[data-carousel-count]');
+      let userPaused = reducedMotion;
+      let pointerPaused = false;
+
+      const setPaused = function (paused) {
+        if (!toggle) return;
+
+        toggle.setAttribute('aria-pressed', String(paused));
+        toggle.setAttribute('aria-label', paused ? 'Reanudar carrusel' : 'Pausar carrusel');
+        if (toggleLabel) toggleLabel.textContent = paused ? 'Reanudar' : 'Pausar';
+        if (toggleIcon) toggleIcon.textContent = paused ? '▶' : 'Ⅱ';
+      };
+
+      const updatePlayback = function () {
+        if (userPaused || pointerPaused) {
+          carouselInstance.pause();
+        } else {
+          carouselInstance.cycle();
+        }
+        setPaused(userPaused);
+      };
+
+      toggle?.addEventListener('click', function () {
+        userPaused = !userPaused;
+        updatePlayback();
+      });
+
+      carousel.addEventListener('mouseenter', function () {
+        pointerPaused = true;
+        updatePlayback();
+      });
+
+      carousel.addEventListener('mouseleave', function () {
+        pointerPaused = false;
+        updatePlayback();
+      });
+
+      updatePlayback();
+
+      carousel.addEventListener('slid.bs.carousel', function (event) {
+        if (counter && typeof event.to === 'number') {
+          counter.textContent = String(event.to + 1).padStart(2, '0');
+        }
+        updatePlayback();
       });
     }
   }

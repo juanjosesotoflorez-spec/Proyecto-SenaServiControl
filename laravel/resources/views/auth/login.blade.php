@@ -20,7 +20,12 @@
                 </div>
                 <div class="mb-3 form-field">
                     <label class="form-label" for="contrasena">Contraseña</label>
-                    <input class="form-control @error('contrasena') is-invalid @enderror" id="contrasena" name="contrasena" type="password" maxlength="255" autocomplete="current-password" required aria-describedby="contrasena-error">
+                    <div class="input-group password-input-group">
+                        <input class="form-control @error('contrasena') is-invalid @enderror" id="contrasena" name="contrasena" type="password" maxlength="255" autocomplete="current-password" required aria-describedby="contrasena-error">
+                        <button class="btn btn-outline-secondary password-toggle" type="button" data-password-toggle aria-controls="contrasena" aria-label="Mostrar contraseña" aria-pressed="false">
+                            <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
                     <div class="invalid-feedback @error('contrasena') d-block @enderror" id="contrasena-error" data-validation-feedback>@error('contrasena'){{ $message }}@enderror</div>
                 </div>
                 <button class="btn btn-success w-100" type="submit">Entrar</button>

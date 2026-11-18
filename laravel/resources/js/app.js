@@ -1,6 +1,23 @@
 import './bootstrap';
 import * as bootstrap from 'bootstrap';
 
+document.querySelectorAll('[data-password-toggle]').forEach((button) => {
+    const inputId = button.getAttribute('aria-controls');
+    const input = inputId ? document.getElementById(inputId) : null;
+    const icon = button.querySelector('i');
+
+    if (!(input instanceof HTMLInputElement) || !icon) return;
+
+    button.addEventListener('click', () => {
+        const isVisible = input.type === 'text';
+        input.type = isVisible ? 'password' : 'text';
+        button.setAttribute('aria-label', isVisible ? 'Mostrar contraseña' : 'Ocultar contraseña');
+        button.setAttribute('aria-pressed', String(!isVisible));
+        icon.classList.toggle('fa-eye', isVisible);
+        icon.classList.toggle('fa-eye-slash', !isVisible);
+    });
+});
+
 document.querySelectorAll('.service-progress-modal').forEach((modal) => {
     document.body.append(modal);
 });
