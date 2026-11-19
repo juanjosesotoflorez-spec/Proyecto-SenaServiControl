@@ -27,4 +27,9 @@
             <i class="fa-solid fa-file-pdf" aria-hidden="true"></i><span>Reportes</span>
         </a>
     @endif
+    @if ($rol === 'administrador')
+        <a class="sidebar-link {{ request()->routeIs('usuarios.*') ? 'is-active' : '' }}" href="{{ route('usuarios.index') }}" @if (request()->routeIs('usuarios.*')) aria-current="page" @endif>
+            <i class="fa-solid fa-user-shield" aria-hidden="true"></i><span>Administración</span>
+        </a>
+    @endif
 </nav>

@@ -7,6 +7,9 @@
 @section('content')
     <div class="page-heading">
         <div><h2>Directorio</h2><p>Registra y consulta la información de contacto.</p></div>
+        @if (auth()->user()->rol->value === 'administrador')
+            <span class="admin-page-badge"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Gestión administrativa</span>
+        @endif
     </div>
     <form method="POST" action="{{ route('clientes.store') }}" class="surface form-panel row g-3" data-validate novalidate>
         @csrf
@@ -45,12 +48,33 @@
     </form>
     <div class="surface table-panel table-responsive">
         <table class="table table-striped">
-            <thead><tr><th>Nombre</th><th>Documento</th><th>Teléfono</th><th>Correo</th></tr></thead>
+            <thead><tr><th>Nombre</th><th>Documento</th><th>Teléfono</th><th>Correo</th>@if (auth()->user()->rol->value === 'administrador')<th>Acciones</th>@endif</tr></thead>
             <tbody>
                 @forelse ($clientes as $cliente)
-                    <tr><td>{{ $cliente->nombre }} {{ $cliente->apellido }}</td><td>{{ $cliente->documento }}</td><td>{{ $cliente->telefono }}</td><td>{{ $cliente->correo }}</td></tr>
+                    <tr>
+                        <td><strong>{{ $cliente->nombre }} {{ $cliente->apellido }}</strong></td>
+                        <td>{{ $cliente->documento }}</td>
+                        <td>{{ $cliente->telefono ?: '—' }}</td>
+                        <td>{{ $cliente->correo ?: '—' }}</td>
+                        @if (auth()->user()->rol->value === 'administrador')
+                            <td>
+                                <div class="admin-row-actions">
+                                    <a class="btn btn-outline-secondary btn-sm" href="{{ route('clientes.edit', $cliente) }}" aria-label="Editar cliente {{ $cliente->nombre }} {{ $cliente->apellido }}">
+                                        <i class="fa-solid fa-pen" aria-hidden="true"></i><span>Editar</span>
+                                    </a>
+                                    <form method="POST" action="{{ route('clientes.destroy', $cliente) }}" onsubmit="return confirm('¿Eliminar este cliente? Solo se permite si no tiene vehículos, cuenta ni notificaciones asociadas.');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-outline-danger btn-sm" type="submit" aria-label="Eliminar cliente {{ $cliente->nombre }} {{ $cliente->apellido }}">
+                                            <i class="fa-solid fa-trash" aria-hidden="true"></i><span>Eliminar</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        @endif
+                    </tr>
                 @empty
-                    <tr><td class="table-empty" colspan="4">No hay clientes registrados.</td></tr>
+                    <tr><td class="table-empty" colspan="{{ auth()->user()->rol->value === 'administrador' ? 5 : 4 }}">No hay clientes registrados.</td></tr>
                 @endforelse
             </tbody>
         </table>

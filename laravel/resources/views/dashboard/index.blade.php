@@ -5,6 +5,21 @@
 @section('eyebrow', 'Bienvenido, ' . $usuario->usuario)
 
 @section('content')
+    @if ($usuario->rol->value === 'administrador')
+        <section class="admin-dashboard-panel" aria-label="Accesos de administración">
+            <div class="admin-dashboard-copy">
+                <span class="admin-console-kicker"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Espacio de administración</span>
+                <h2>Todo el taller, bajo control</h2>
+                <p>Gestiona los registros y accesos con trazabilidad y protección del historial.</p>
+            </div>
+            <div class="admin-dashboard-links">
+                <a href="{{ route('clientes.index') }}"><i class="fa-solid fa-users" aria-hidden="true"></i><span><strong>Clientes</strong><small>Consultar y actualizar</small></span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                <a href="{{ route('vehiculos.index') }}"><i class="fa-solid fa-car" aria-hidden="true"></i><span><strong>Vehículos</strong><small>Administrar registros</small></span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                <a href="{{ route('usuarios.index') }}"><i class="fa-solid fa-user-shield" aria-hidden="true"></i><span><strong>Usuarios</strong><small>Controlar accesos</small></span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            </div>
+        </section>
+    @endif
+
     @if ($perfilFaltante)
         <div class="alert alert-warning" role="alert">
             Tu cuenta no tiene un perfil de {{ $perfilFaltante }} vinculado. Comunícate con un administrador para completar la configuración; mientras tanto, no se mostrarán servicios asociados.

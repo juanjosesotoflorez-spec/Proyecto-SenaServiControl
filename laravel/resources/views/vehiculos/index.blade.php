@@ -7,6 +7,9 @@
 @section('content')
     <div class="page-heading">
         <div><h2>Vehículos registrados</h2><p>Administra placas y datos del parque automotor.</p></div>
+        @if (auth()->user()->rol->value === 'administrador')
+            <span class="admin-page-badge"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Gestión administrativa</span>
+        @endif
     </div>
     <form method="POST" action="{{ route('vehiculos.store') }}" class="surface form-panel row g-3" data-validate novalidate>
         @csrf
@@ -57,12 +60,33 @@
     </form>
     <div class="surface table-panel table-responsive">
         <table class="table table-striped">
-            <thead><tr><th>Placa</th><th>Marca</th><th>Modelo</th><th>Cliente</th></tr></thead>
+            <thead><tr><th>Placa</th><th>Marca</th><th>Modelo</th><th>Cliente</th>@if (auth()->user()->rol->value === 'administrador')<th>Acciones</th>@endif</tr></thead>
             <tbody>
                 @forelse ($vehiculos as $vehiculo)
-                    <tr><td>{{ $vehiculo->placa }}</td><td>{{ $vehiculo->marca }}</td><td>{{ $vehiculo->modelo }}</td><td>{{ $vehiculo->cliente->nombre }} {{ $vehiculo->cliente->apellido }}</td></tr>
+                    <tr>
+                        <td><strong>{{ $vehiculo->placa }}</strong></td>
+                        <td>{{ $vehiculo->marca }}</td>
+                        <td>{{ $vehiculo->modelo }}</td>
+                        <td>{{ $vehiculo->cliente->nombre }} {{ $vehiculo->cliente->apellido }}</td>
+                        @if (auth()->user()->rol->value === 'administrador')
+                            <td>
+                                <div class="admin-row-actions">
+                                    <a class="btn btn-outline-secondary btn-sm" href="{{ route('vehiculos.edit', $vehiculo) }}" aria-label="Editar vehículo {{ $vehiculo->placa }}">
+                                        <i class="fa-solid fa-pen" aria-hidden="true"></i><span>Editar</span>
+                                    </a>
+                                    <form method="POST" action="{{ route('vehiculos.destroy', $vehiculo) }}" onsubmit="return confirm('¿Eliminar el vehículo {{ $vehiculo->placa }}? Solo se permite si no tiene servicios ni solicitudes asociadas.');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-outline-danger btn-sm" type="submit" aria-label="Eliminar vehículo {{ $vehiculo->placa }}">
+                                            <i class="fa-solid fa-trash" aria-hidden="true"></i><span>Eliminar</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        @endif
+                    </tr>
                 @empty
-                    <tr><td class="table-empty" colspan="4">No hay vehículos registrados.</td></tr>
+                    <tr><td class="table-empty" colspan="{{ auth()->user()->rol->value === 'administrador' ? 5 : 4 }}">No hay vehículos registrados.</td></tr>
                 @endforelse
             </tbody>
         </table>

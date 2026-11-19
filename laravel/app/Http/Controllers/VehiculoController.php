@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Enums\RolUsuario;
 use App\Http\Requests\VehiculoRequest;
+use App\Http\Requests\UpdateAdminVehiculoRequest;
 use App\Models\Cliente;
 use App\Models\Usuario;
 use App\Models\Vehiculo;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class VehiculoController extends Controller
@@ -51,5 +53,45 @@ class VehiculoController extends Controller
         Vehiculo::query()->create($data);
 
         return redirect()->route('vehiculos.index')->with('status', 'Vehículo registrado correctamente.');
+    }
+
+    public function edit(Vehiculo $vehiculo): View
+    {
+        return view('vehiculos.edit', [
+            'vehiculo' => $vehiculo->load('cliente'),
+            'clientes' => Cliente::query()->orderBy('apellido')->orderBy('nombre')->get(),
+        ]);
+    }
+
+    public function update(UpdateAdminVehiculoRequest $request, Vehiculo $vehiculo): RedirectResponse
+    {
+        $datos = $request->validated();
+        $cambiaPropietario = (int) $datos['id_cliente'] !== (int) $vehiculo->id_cliente;
+
+        if (
+            $cambiaPropietario
+            && ($vehiculo->servicios()->exists() || $vehiculo->solicitudesServicio()->exists())
+        ) {
+            throw ValidationException::withMessages([
+                'id_cliente' => 'No se puede cambiar el propietario de un vehículo con servicios o solicitudes asociadas, porque afectaría su historial.',
+            ]);
+        }
+
+        $vehiculo->update($datos);
+
+        return redirect()->route('vehiculos.index')->with('status', 'Vehículo actualizado correctamente.');
+    }
+
+    public function destroy(Vehiculo $vehiculo): RedirectResponse
+    {
+        if ($vehiculo->servicios()->exists() || $vehiculo->solicitudesServicio()->exists()) {
+            return back()->withErrors([
+                'vehiculo' => 'No se puede eliminar este vehículo porque tiene servicios o solicitudes asociadas. El historial debe conservarse.',
+            ]);
+        }
+
+        $vehiculo->delete();
+
+        return redirect()->route('vehiculos.index')->with('status', 'Vehículo eliminado correctamente.');
     }
 }

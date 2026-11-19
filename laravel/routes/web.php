@@ -9,6 +9,7 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\SolicitudServicioController;
 use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\UsuarioAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -63,4 +64,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/reportes/pdf', [ReporteController::class, 'pdf'])
         ->middleware('role:administrador,recepcionista')
         ->name('reportes.pdf');
+
+    Route::middleware('role:administrador')->group(function () {
+        Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
+        Route::put('/clientes/{cliente}', [ClienteController::class, 'update'])->name('clientes.update');
+        Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
+
+        Route::get('/vehiculos/{vehiculo}/edit', [VehiculoController::class, 'edit'])->name('vehiculos.edit');
+        Route::put('/vehiculos/{vehiculo}', [VehiculoController::class, 'update'])->name('vehiculos.update');
+        Route::delete('/vehiculos/{vehiculo}', [VehiculoController::class, 'destroy'])->name('vehiculos.destroy');
+
+        Route::get('/usuarios', [UsuarioAdminController::class, 'index'])->name('usuarios.index');
+        Route::get('/usuarios/{usuario}/edit', [UsuarioAdminController::class, 'edit'])->name('usuarios.edit');
+        Route::put('/usuarios/{usuario}', [UsuarioAdminController::class, 'update'])->name('usuarios.update');
+        Route::delete('/usuarios/{usuario}', [UsuarioAdminController::class, 'destroy'])->name('usuarios.destroy');
+    });
 });
