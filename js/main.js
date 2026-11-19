@@ -3,12 +3,60 @@ document.addEventListener('DOMContentLoaded', function () {
   const contactFeedback = document.getElementById('contactoMensaje');
   const contactForm = document.getElementById('contactoForm');
 
+  function showContactFeedback(type, message) {
+    if (!contactFeedback) return;
+
+    contactFeedback.classList.remove('d-none', 'alert-success', 'alert-danger', 'alert-warning');
+    contactFeedback.classList.add(type);
+    contactFeedback.textContent = message;
+  }
+
   if (contactForm && contactFeedback) {
     contactForm.addEventListener('invalid', function () {
-      contactFeedback.classList.remove('d-none', 'alert-success', 'alert-danger');
-      contactFeedback.classList.add('alert-warning');
-      contactFeedback.textContent = 'Completa los campos obligatorios y corrige los datos marcados antes de enviar.';
+      showContactFeedback('alert-warning', 'Completa los campos obligatorios y corrige los datos marcados antes de enviar.');
     }, true);
+
+    contactForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      if (!contactForm.reportValidity()) return;
+
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      const originalLabel = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = 'Enviando...';
+
+      try {
+        const response = await fetch(contactForm.action, {
+          method: contactForm.method,
+          body: new FormData(contactForm),
+          headers: { Accept: 'application/json' }
+        });
+        const result = await response.json();
+
+        if (response.ok) {
+          showContactFeedback('alert-success', result.message);
+          contactForm.reset();
+          return;
+        }
+
+        if (response.status === 422) {
+          const validationErrors = Object.values(result.errors || {}).flat();
+          showContactFeedback('alert-warning', validationErrors.join(' ') || 'Revisa los datos e inténtalo de nuevo.');
+        } else if (response.status === 429) {
+          showContactFeedback('alert-warning', 'Has enviado varios mensajes. Espera un minuto antes de intentarlo nuevamente.');
+        } else if (response.status === 503 && result.message) {
+          showContactFeedback('alert-danger', result.message);
+        } else {
+          showContactFeedback('alert-danger', 'No fue posible enviar el mensaje. Inténtalo de nuevo más tarde.');
+        }
+      } catch (error) {
+        showContactFeedback('alert-danger', 'No fue posible conectar con el servicio de correo. Inténtalo de nuevo más tarde.');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
+      }
+    });
   }
 
   if (contactStatus && contactFeedback) {
@@ -19,11 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     const feedback = feedbackMessages[contactStatus];
 
-    if (feedback) {
-      contactFeedback.classList.remove('d-none');
-      contactFeedback.classList.add(feedback[0]);
-      contactFeedback.textContent = feedback[1];
-    }
+    if (feedback) showContactFeedback(feedback[0], feedback[1]);
   }
 
   const sidebarToggle = document.querySelector('[data-sidebar-toggle]');
@@ -172,4 +216,48 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  const revealElements = document.querySelectorAll('[data-reveal]');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (revealElements.length > 0 && !prefersReducedMotion && 'IntersectionObserver' in window) {
+    document.body.classList.add('home-motion');
+    const revealObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+
+    revealElements.forEach(function (element) {
+      revealObserver.observe(element);
+    });
+  }
+
+  const homeSections = document.querySelectorAll('main section[id]');
+  const homeNavLinks = document.querySelectorAll('.home-navbar .nav-link[href^="#"]');
+
+  if (homeSections.length > 0 && homeNavLinks.length > 0 && 'IntersectionObserver' in window) {
+    const sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+
+        homeNavLinks.forEach(function (link) {
+          const isCurrent = link.hash === `#${entry.target.id}`;
+          link.classList.toggle('active', isCurrent);
+          if (isCurrent) {
+            link.setAttribute('aria-current', 'location');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    homeSections.forEach(function (section) {
+      sectionObserver.observe(section);
+    });
+  }
 });

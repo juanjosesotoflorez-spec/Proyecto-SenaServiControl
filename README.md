@@ -338,6 +338,30 @@ CACHE_STORE=file
 QUEUE_CONNECTION=sync
 ```
 
+### Envío del formulario de contacto
+
+El formulario envía los mensajes a `senaserviteca@gmail.com` mediante SMTP de Gmail. Copia estas variables en `laravel/.env` y configura una **contraseña de aplicación de Google** (no la contraseña normal de la cuenta):
+
+```env
+MAIL_MAILER=smtp
+MAIL_SCHEME=null
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=senaserviteca@gmail.com
+MAIL_PASSWORD=CONTRASENA_DE_APLICACION
+MAIL_FROM_ADDRESS="${MAIL_USERNAME}"
+MAIL_FROM_NAME="${APP_NAME}"
+CONTACT_MAIL_ADDRESS=senaserviteca@gmail.com
+```
+
+La cuenta debe tener activada la verificación en dos pasos para generar una contraseña de aplicación. Después de guardar `.env`, ejecuta desde `laravel/`:
+
+```bash
+php artisan config:clear
+```
+
+No publiques ni compartas la contraseña de aplicación. Si SMTP no está configurado, el formulario mostrará un error y no indicará falsamente que el mensaje se envió.
+
 ### Parámetros de base de datos
 
 | Variable | Descripción |
