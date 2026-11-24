@@ -7,7 +7,7 @@
     <div class="auth-content">
         <section class="surface login-panel auth-login-panel auth-register-panel" aria-labelledby="register-title">
             <div class="auth-logo-card">
-                <img src="../../imagenes/sena_logo_transparente.png" alt="Logo SENA" width="48" height="48">
+                <img src="{{ url('/inicio/imagenes/sena_logo_transparente.png') }}" alt="Logo SENA" width="48" height="48">
             </div>
             <h2 id="register-title">Crear cuenta</h2>
             <p class="auth-login-intro">Completa tus datos para registrarte como cliente.</p>
@@ -86,7 +86,7 @@
                 </div>
             </form>
             <p class="auth-login-link">¿Ya tienes cuenta? <a href="{{ route('login') }}">Inicia sesión</a></p>
-            <p class="auth-login-link"><a href="../../index.html">Volver a la página principal</a></p>
+            <p class="auth-login-link"><a href="{{ route('inicio') }}">Volver a la página principal</a></p>
         </section>
         <aside class="auth-side-message" aria-label="Serviteca SENA">
             <span>Serviteca SENA</span>

@@ -13,8 +13,60 @@ use App\Http\Controllers\UsuarioAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->away('/SENA_SERVITECA_1/index.html');
+    return redirect()->route('inicio');
 });
+
+Route::get('/inicio', function () {
+    $landingPath = base_path('../index.html');
+    abort_unless(is_file($landingPath), 404);
+
+    $html = file_get_contents($landingPath);
+    abort_if($html === false, 500);
+
+    $html = str_replace([
+        'href="laravel/public/login"',
+        'href="laravel/public/register"',
+        'href="css/',
+        'href="js/',
+        'src="css/',
+        'src="js/',
+        'src="imagenes/',
+    ], [
+        'href="login"',
+        'href="register"',
+        'href="inicio/css/',
+        'href="inicio/js/',
+        'src="inicio/css/',
+        'src="inicio/js/',
+        'src="inicio/imagenes/',
+    ], $html);
+
+    return response($html, 200, [
+        'Content-Type' => 'text/html; charset=UTF-8',
+    ]);
+})->name('inicio');
+
+Route::get('/inicio/{folder}/{file}', function (string $folder, string $file) {
+    abort_unless(in_array($folder, ['css', 'js', 'imagenes'], true), 404);
+
+    $root = realpath(base_path('../'.$folder));
+    $path = realpath($root.DIRECTORY_SEPARATOR.$file);
+    abort_unless(is_string($root) && is_string($path), 404);
+    abort_unless(str_starts_with($path, $root.DIRECTORY_SEPARATOR), 404);
+    abort_unless(is_file($path), 404);
+
+    $mime = match (pathinfo($path, PATHINFO_EXTENSION)) {
+        'css' => 'text/css',
+        'js' => 'application/javascript',
+        'png' => 'image/png',
+        'jpg', 'jpeg' => 'image/jpeg',
+        'gif' => 'image/gif',
+        'svg' => 'image/svg+xml',
+        default => 'application/octet-stream',
+    };
+
+    return response()->file($path, ['Content-Type' => $mime]);
+})->where('folder', 'css|js|imagenes')->where('file', '[^/]+');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'create'])->name('login');

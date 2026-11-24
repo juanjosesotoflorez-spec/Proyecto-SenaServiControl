@@ -60,6 +60,12 @@ Los tokens duran 60 minutos por defecto; puedes ajustarlo con `JWT_TTL`. Configu
 
 La descarga y la vista de impresión PDF están disponibles para el rol administrador. Los PDF se generan con `barryvdh/laravel-dompdf`.
 
+## Documentación técnica
+
+- [Design system y arquitectura de interfaz](docs/design.md)
+- [Migración MVC](docs/migracion-mvc.md)
+- [Controles de seguridad](docs/seguridad.md)
+
 ## Seguridad de aplicación
 
 - Las rutas web usan el middleware `web` de Laravel, con sesión y protección CSRF para formularios.

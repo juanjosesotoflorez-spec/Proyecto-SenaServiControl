@@ -19,7 +19,7 @@ class LegacyAuthRoutesTest extends TestCase
     public function test_laravel_root_redirects_to_the_project_landing_page(): void
     {
         $this->get('/')
-            ->assertRedirect('../../index.html');
+            ->assertRedirect(route('inicio'));
     }
 
     public function test_landing_page_auth_links_are_relative_to_the_project_directory(): void

@@ -10,6 +10,7 @@ use App\Models\HistorialActividadUsuario;
 use App\Models\Recepcionista;
 use App\Models\Servicio;
 use App\Models\Usuario;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -37,7 +38,10 @@ class EntregaVehiculoController extends Controller
             $idRecepcionista = $recepcionista->getKey();
         }
 
-        DB::transaction(function () use ($idRecepcionista, $servicio, $usuario): void {
+        $fechaSalidaTexto = $request->validated('fecha_salida');
+        $fechaSalida = $fechaSalidaTexto ? Carbon::parse((string) $fechaSalidaTexto) : now();
+
+        DB::transaction(function () use ($idRecepcionista, $servicio, $usuario, $fechaSalida): void {
             $servicio = Servicio::query()
                 ->whereKey($servicio->getKey())
                 ->lockForUpdate()
@@ -55,7 +59,6 @@ class EntregaVehiculoController extends Controller
                 ]);
             }
 
-            $fechaSalida = now();
             $entrega = EntregaVehiculo::query()->create([
                 'id_servicio' => $servicio->getKey(),
                 'id_recepcionista' => $idRecepcionista,

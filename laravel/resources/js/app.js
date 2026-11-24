@@ -18,12 +18,58 @@ document.querySelectorAll('[data-password-toggle]').forEach((button) => {
     });
 });
 
-document.querySelectorAll('.service-progress-modal').forEach((modal) => {
+document.querySelectorAll('.service-progress-modal, .vehicle-delivery-modal').forEach((modal) => {
     document.body.append(modal);
 });
 
 document.querySelectorAll('[data-open-service-modal="true"]').forEach((modal) => {
     bootstrap.Modal.getOrCreateInstance(modal).show();
+});
+
+const deliveryFallback = (modal) => {
+    if (!modal.classList.contains('show')) {
+        document.querySelectorAll('.modal-backdrop').forEach((backdrop) => backdrop.remove());
+        modal.classList.add('show');
+        modal.style.display = 'block';
+        modal.removeAttribute('aria-hidden');
+        modal.setAttribute('aria-modal', 'true');
+        document.body.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+
+        if (!document.querySelector('.modal-backdrop')) {
+            const backdrop = document.createElement('div');
+            backdrop.className = 'modal-backdrop fade show';
+            document.body.append(backdrop);
+        }
+    }
+};
+
+document.querySelectorAll('[data-bs-target*="vehicle-delivery-modal"], [data-bs-target*="service-progress-modal"]').forEach((button) => {
+    button.addEventListener('click', () => {
+        const target = button.dataset.bsTarget;
+        const modal = target ? document.querySelector(target) : null;
+        if (!(modal instanceof HTMLElement)) return;
+
+        const instance = bootstrap.Modal.getOrCreateInstance(modal, { backdrop: true, keyboard: true });
+        instance.show();
+        window.setTimeout(() => deliveryFallback(modal), 80);
+    });
+});
+
+document.querySelectorAll('.vehicle-delivery-modal [data-bs-dismiss="modal"], .service-progress-modal [data-bs-dismiss="modal"]').forEach((button) => {
+    button.addEventListener('click', () => {
+        const modal = button.closest('.modal');
+        if (!(modal instanceof HTMLElement)) return;
+
+        bootstrap.Modal.getInstance(modal)?.hide();
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.removeAttribute('aria-modal');
+        document.querySelectorAll('.modal-backdrop').forEach((backdrop) => backdrop.remove());
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('overflow');
+    });
 });
 
 document.querySelectorAll('[data-image-preview-input]').forEach((input) => {

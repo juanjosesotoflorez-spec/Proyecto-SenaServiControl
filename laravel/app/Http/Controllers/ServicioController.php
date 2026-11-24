@@ -77,6 +77,9 @@ class ServicioController extends Controller
             'termino' => $termino,
             'tecnicoActualId' => $tecnicoActualId,
             'estadoInicial' => EstadoServicioEnum::Pendiente->value,
+            'recepcionistaActual' => $usuario->rol === RolUsuario::Recepcionista
+                ? Recepcionista::query()->where('id_usuario', $usuario->getKey())->first()
+                : null,
             'vehiculos' => $usuario->rol === RolUsuario::Recepcionista
                 ? Vehiculo::query()->with('cliente')->orderBy('placa')->get()
                 : collect(),

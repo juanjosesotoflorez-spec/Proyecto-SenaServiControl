@@ -22,6 +22,8 @@ class EntregaVehiculoRequest extends FormRequest
             'id_recepcionista' => $this->user()?->rol === RolUsuario::Administrador
                 ? ['required', 'integer', 'exists:recepcionista,id_recepcionista']
                 : ['prohibited'],
+            'fecha_salida' => ['nullable', 'date'],
+            'form_delivery_service_id' => ['nullable', 'integer'],
         ];
     }
 

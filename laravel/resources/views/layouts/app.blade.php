@@ -16,7 +16,7 @@
             <aside class="sidebar d-none d-lg-flex" aria-label="Navegación principal">
                 <a class="brand" href="{{ route('dashboard') }}">
                     <span class="brand-mark" aria-hidden="true">SS</span>
-                    <span><strong>SenaServi</strong><small>CONTROL</small></span>
+                    <span><strong>SenaServiControl</strong><small>Operaciones automotrices</small></span>
                 </a>
                 <p class="sidebar-label">Espacio de trabajo</p>
                 @include('layouts.partials.navigation')
@@ -37,7 +37,7 @@
                 <div class="offcanvas-header">
                     <div class="brand mobile-brand">
                         <span class="brand-mark" aria-hidden="true">SS</span>
-                        <span><strong id="mobile-navigation-title">SenaServi</strong><small>CONTROL</small></span>
+                        <span><strong id="mobile-navigation-title">SenaServiControl</strong><small>Operaciones automotrices</small></span>
                     </div>
                     <button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas" aria-label="Cerrar menú"></button>
                 </div>

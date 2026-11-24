@@ -142,28 +142,21 @@
                                     <span class="d-block small">{{ $entrega->recepcionista->nombre }} {{ $entrega->recepcionista->apellido }}</span>
                                 @endif
                             @elseif (in_array(auth()->user()->rol->value, ['administrador', 'recepcionista'], true) && in_array($servicio->estado, [\App\Enums\EstadoServicioEnum::Finalizado, \App\Enums\EstadoServicioEnum::Entregado], true))
-                                <form method="POST" action="{{ route('servicios.delivery.store', $servicio) }}" data-validate novalidate>
-                                    @csrf
-                                    @if (auth()->user()->rol->value === 'administrador')
-                                        <div class="form-field mb-2">
-                                            <label class="visually-hidden" for="id-recepcionista-entrega-{{ $servicio->id_servicio }}">Recepcionista responsable</label>
-                                            <select class="form-select form-select-sm @error('id_recepcionista') is-invalid @enderror" id="id-recepcionista-entrega-{{ $servicio->id_servicio }}" name="id_recepcionista" required>
-                                                <option value="">Recepcionista</option>
-                                                @foreach ($recepcionistas as $recepcionista)
-                                                    <option value="{{ $recepcionista->id_recepcionista }}" @selected(old('id_recepcionista') == $recepcionista->id_recepcionista)>{{ $recepcionista->nombre }} {{ $recepcionista->apellido }}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="invalid-feedback @error('id_recepcionista') d-block @enderror" data-validation-feedback>@error('id_recepcionista'){{ $message }}@enderror</div>
-                                        </div>
-                                    @endif
-                                    @if (auth()->user()->rol->value !== 'administrador' || $recepcionistas->isNotEmpty())
-                                        <button class="btn btn-success btn-sm text-nowrap" type="submit">
-                                            {{ $servicio->estado === \App\Enums\EstadoServicioEnum::Entregado ? 'Completar registro' : 'Registrar entrega' }}
-                                        </button>
-                                    @else
-                                        <span class="small text-muted">No hay recepcionistas registrados.</span>
-                                    @endif
-                                </form>
+                                @if (auth()->user()->rol->value !== 'administrador' || $recepcionistas->isNotEmpty())
+                                    <button
+                                        class="btn btn-success btn-sm text-nowrap"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#vehicle-delivery-modal-{{ $servicio->id_servicio }}"
+                                        aria-haspopup="dialog"
+                                        aria-controls="vehicle-delivery-modal-{{ $servicio->id_servicio }}"
+                                    >
+                                        <i class="fa-solid fa-right-from-bracket me-1" aria-hidden="true"></i>
+                                        {{ $servicio->estado === \App\Enums\EstadoServicioEnum::Entregado ? 'Completar registro' : 'Registrar salida' }}
+                                    </button>
+                                @else
+                                    <span class="small text-muted">No hay recepcionistas registrados.</span>
+                                @endif
                             @else
                                 <span class="text-muted small">Pendiente</span>
                             @endif
@@ -243,4 +236,98 @@
             @endif
         @endforeach
     @endif
+
+    @foreach ($servicios as $servicio)
+        @if (
+            $servicio->entregas->isEmpty()
+            && in_array(auth()->user()->rol->value, ['administrador', 'recepcionista'], true)
+            && in_array($servicio->estado, [\App\Enums\EstadoServicioEnum::Finalizado, \App\Enums\EstadoServicioEnum::Entregado], true)
+            && (auth()->user()->rol->value !== 'administrador' || $recepcionistas->isNotEmpty())
+        )
+            @php($formularioEntregaConError = (string) old('form_delivery_service_id') === (string) $servicio->id_servicio)
+            @php($errorRecepcionista = $formularioEntregaConError ? $errors->first('id_recepcionista') : '')
+            @php($errorFechaSalida = $formularioEntregaConError ? $errors->first('fecha_salida') : '')
+            <div
+                class="modal fade vehicle-delivery-modal"
+                id="vehicle-delivery-modal-{{ $servicio->id_servicio }}"
+                tabindex="-1"
+                aria-labelledby="vehicle-delivery-title-{{ $servicio->id_servicio }}"
+                aria-hidden="true"
+                @if ($formularioEntregaConError) data-open-service-modal="true" @endif
+            >
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div>
+                                <p class="text-uppercase small fw-bold text-success mb-1">Entrega del vehículo</p>
+                                <h2 class="modal-title" id="vehicle-delivery-title-{{ $servicio->id_servicio }}">Registrar salida</h2>
+                            </div>
+                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Cerrar ventana"></button>
+                        </div>
+                        <form method="POST" action="{{ route('servicios.delivery.store', $servicio) }}" class="modal-body vehicle-delivery-form" data-validate novalidate>
+                            @csrf
+                            <input type="hidden" name="form_delivery_service_id" value="{{ $servicio->id_servicio }}">
+                            <p class="form-required-note">Todos los campos visibles son obligatorios.</p>
+                            <div class="vehicle-delivery-meta">
+                                <div>
+                                    <span>Servicio</span>
+                                    <strong>#{{ $servicio->id_servicio }}</strong>
+                                </div>
+                                <div>
+                                    <span>Vehículo</span>
+                                    <strong>{{ $servicio->vehiculo->placa }}</strong>
+                                </div>
+                                <div>
+                                    <span>Cliente</span>
+                                    <strong>{{ $servicio->vehiculo->cliente->nombre }} {{ $servicio->vehiculo->cliente->apellido }}</strong>
+                                </div>
+                            </div>
+                            @if (auth()->user()->rol->value === 'administrador')
+                                <div class="form-field">
+                                    <label class="form-label" for="id-recepcionista-entrega-{{ $servicio->id_servicio }}">Recepcionista encargado</label>
+                                    <select class="form-select {{ $errorRecepcionista !== '' ? 'is-invalid' : '' }}" id="id-recepcionista-entrega-{{ $servicio->id_servicio }}" name="id_recepcionista" required>
+                                        <option value="">Selecciona el recepcionista</option>
+                                        @foreach ($recepcionistas as $recepcionista)
+                                            <option value="{{ $recepcionista->id_recepcionista }}" @selected(old('id_recepcionista') == $recepcionista->id_recepcionista)>{{ $recepcionista->nombre }} {{ $recepcionista->apellido }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback {{ $errorRecepcionista !== '' ? 'd-block' : '' }}" data-validation-feedback>{{ $errorRecepcionista }}</div>
+                                </div>
+                            @else
+                                <div class="vehicle-delivery-responsible">
+                                    <i class="fa-solid fa-user-check" aria-hidden="true"></i>
+                                    <div>
+                                        <span>Recepcionista encargado</span>
+                                        <strong>{{ $recepcionistaActual?->nombre }} {{ $recepcionistaActual?->apellido }}</strong>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="form-field">
+                                <label class="form-label" for="fecha-salida-{{ $servicio->id_servicio }}">Fecha y hora de salida</label>
+                                <input
+                                    class="form-control {{ $errorFechaSalida !== '' ? 'is-invalid' : '' }}"
+                                    id="fecha-salida-{{ $servicio->id_servicio }}"
+                                    name="fecha_salida"
+                                    type="datetime-local"
+                                    value="{{ $formularioEntregaConError ? old('fecha_salida') : now()->format('Y-m-d\TH:i') }}"
+                                    required
+                                >
+                                <div class="invalid-feedback {{ $errorFechaSalida !== '' ? 'd-block' : '' }}" data-validation-feedback>{{ $errorFechaSalida }}</div>
+                            </div>
+                            <p class="vehicle-delivery-hint">
+                                <i class="fa-solid fa-circle-check me-1" aria-hidden="true"></i>
+                                Confirma que el vehículo sale del taller y completa la entrega.
+                            </p>
+                            <div class="modal-footer">
+                                <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-success" type="submit">
+                                    <i class="fa-solid fa-right-from-bracket me-2" aria-hidden="true"></i>Confirmar salida
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endforeach
 @endsection
